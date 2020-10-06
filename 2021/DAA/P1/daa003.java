@@ -1,129 +1,144 @@
 import java.util.Scanner;
 import java.lang.Math;
-import java.lang.Character;
 
 public class daa003{
+
+	public static int matricula(String m){
+		if((m.charAt(0)>='A' && m.charAt(0)<='Z') && (m.charAt(4)<='A' || m.charAt(4)>='Z')) return 1;
+		if(m.charAt(4)>='A' && m.charAt(4)<='Z') return 2;
+		if(m.charAt(2)>='A' && m.charAt(2)<='Z') return 3;
+		else return 4;
+
+	}
+
+	//XXNNNN (1ª geração)(5290000)
+	//NNNNXX (2ª geração)(5290000)
+	//NNXXNN (3ª geração)(5290000)
+	//XXNNXX (4ª geração)(27984100)
+
+	public static int soma(String m, int g){
+		int sum = 0;
+
+		//1ª Geração
+		if(g == 1){
+			
+			if(m.charAt(0)<'K') sum += (m.charAt(0) - 'A');
+			else if(m.charAt(0)>'K' && m.charAt(0) < 'W') sum += (m.charAt(0) - 'A'-1);
+			else if(m.charAt(0)>'W' && m.charAt(0) < 'Y') sum += (m.charAt(0) - 'A' - 2);			
+			else sum += (m.charAt(0) - 'A' - 2);
+			
+			sum *= Math.pow(10,6);
+			System.out.println("First Char sum: " + sum);
+
+			if(m.charAt(1)<'K') sum *= (m.charAt(1) - 'A');
+			else if(m.charAt(1)>'K' && m.charAt(1) < 'W') sum *= (m.charAt(1) - 'A'-1);
+			else if(m.charAt(1)>'W' && m.charAt(1) < 'Y') sum *= (m.charAt(1) - 'A' - 2);
+			else sum *= (m.charAt(0) - 'A' - 2);
+			
+			System.out.println(sum);
+			
+			for(int i = 2; i<6; i++){
+				System.out.println(m.charAt(i));
+				sum += ((m.charAt(i) - '0')*Math.pow(10,5-i));
+			}
+			
+			System.out.println("SumWithNumbers: " + sum);;
+		}
+
+		//2ª Geração
+		if(g == 2){
+
+			sum = 5290000;
+
+			if(m.charAt(4)<'K') sum += (m.charAt(4) - 'A');
+			else if(m.charAt(4)>'K' && m.charAt(4) < 'W') sum += (m.charAt(4) - 'A' - 1);
+			else if(m.charAt(4)>'W' && m.charAt(4) < 'Y') sum += (m.charAt(4) - 'A' - 2);
+			else sum += (m.charAt(4) - 'A' - 3);
+			
+			System.out.println("sum: "+sum);
+
+			if(m.charAt(4)<'K') sum += (m.charAt(4) - 'A' + 1);
+			else if(m.charAt(4)>'K' && m.charAt(4) < 'W') sum += (m.charAt(4) - 'A' - 1);
+			else if(m.charAt(4)>'W' && m.charAt(4) < 'Y') sum += (m.charAt(4) - 'A' - 2);
+			else sum += (m.charAt(4) - 'A' - 3);
+
+			sum *= Math.pow(10,4);
+			System.out.println(sum);
+			
+			for(int i = 0; i<4; i++){
+				System.out.println(m.charAt(i));
+				sum += ((m.charAt(i) - '0')*Math.pow(10,4-i));
+			}
+			System.out.println("SumWithNumbers: " + sum);
+		}
+
+		//3ª Geração
+		if(g == 3){
+
+			sum = 5290000 + 5290000;
+
+			if(m.charAt(2)<'K') sum += (m.charAt(2) - 'A');
+			else if(m.charAt(2)>'K' && m.charAt(2) < 'W') sum += (m.charAt(2) - 'A' - 1);
+			else if(m.charAt(2)>'W' && m.charAt(2) < 'Y') sum += (m.charAt(2) - 'A' - 2);
+			else sum += (m.charAt(2) - 'A' - 3);
+			
+			System.out.println("sum: " + sum);
+
+			if(m.charAt(3)<'K') sum += (m.charAt(3) - 'A');
+			else if(m.charAt(3)>'K' && m.charAt(3) < 'W') sum += (m.charAt(3) - 'A' - 1);
+			else if(m.charAt(3)>'W' && m.charAt(3) < 'Y') sum += (m.charAt(3) - 'A' - 2);
+			else sum += (m.charAt(3) - 'A' - 3);
+
+			sum *= Math.pow(10,4);
+			System.out.println(sum);
+			
+			for(int i = 0; i<2; i++){
+				System.out.println(m.charAt(i));
+				sum += ((m.charAt(i) - '0')*Math.pow(10,3-i));
+			}
+
+			for(int i = 4; i<6; i++){
+				System.out.println(m.charAt(i));
+				sum += ((m.charAt(i) - '0')*Math.pow(10,5-i));
+			}
+
+			System.out.println("SumWithNumbers: " + sum);
+
+		}
+		return sum;
+	}
+
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 
 		int t = in.nextInt();
 		in.nextLine();
-		for(int i = 0; i<1; i++){
+		for(int index = 0; index<t; index++){
 
 			String s = in.nextLine();
+			String m1 = "";
+			String m2 = "";
 
-			/*
-
-			int count = 6, flag = 0;
-			int num1 = 0,num2 = 0;
-
-			System.out.println("---------------Numero1----------------");
-
-			for(int j = 0; j<8; j++){
-				if(j == 2 || j == 5);
-				else{
-					//1ª Geração					
-					if(j<2 && Character.isLetter(s.charAt(j))){
-						if(s.charAt(j)>'K'){
-							System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A'));
-							num1 += (s.charAt(j) - 'A'- 1)*Math.pow(10,count);
-						}
-						else if(s.charAt(j)>'W'){
-							System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' - 1));
-							num1 += (s.charAt(j) - 'A'- 2)*Math.pow(10,count);	
-						}
-						else if(s.charAt(j)>'W'){
-							System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' - 2));
-							num1 += (s.charAt(j) - 'A'- 3)*Math.pow(10,count);
-						}
-						else{
-							System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' + 1));
-							num1 += (s.charAt(j) - 'A')*Math.pow(10,count);
-						}
-						flag++;
-					}
-					//2ª Geração
-					else if((j>5 && j<7 && flag == 0) && Character.isLetter(s.charAt(j))){
-						System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' + 46));
-						num1 += (s.charAt(j) - 'A' + 46)*Math.pow(10,count);
-						flag++;
-					}
-					//3ª Geração
-					else if((j>2 && j<5) && Character.isLetter(s.charAt(j))){
-						System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' + 93));
-						num1 += (s.charAt(j) - 'A' + 93)*Math.pow(10,count);
-						flag++;
-					}
-					//4ª Geração
-					else if((j>5 && j<7) && Character.isLetter(s.charAt(j)) && flag == 1){
-						System.out.println("Letra: " +s.charAt(j)+ " valor: "+(s.charAt(j) - 'A' + 103));
-						num1 += (s.charAt(j) - 'A' + 103)*Math.pow(10,count);
-					}
-					//Numeros
-					else{
-						System.out.println("Numero: "+s.charAt(j) + " valor: "+((s.charAt(j)) - '0'));
-						num1 += (((s.charAt(j)) - '0')*Math.pow(10,count));
-					}
-					count--;
-					System.out.println("Numero1: "+num1);
-				}
+			for(int i = 0; i<8; i++){
+				if(s.charAt(i) != '-') m1 = m1 + s.charAt(i);
 			}
 
-			System.out.println("---------------Numero2----------------");
-			count = 6;
-
-			for(int k = 9; k<17; k++){
-				if(k == 11 || k == 14);
-				else{
-					//1ª Geração					
-					if(k<11 && Character.isLetter(s.charAt(k))){
-						if(s.charAt(k)>'K'){
-							System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' - 1));
-							num1 += (s.charAt(k) - 'A'- 1)*Math.pow(10,count);
-						}
-						else if(s.charAt(k)>'W'){
-							System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' - 2));
-							num1 += (s.charAt(k) - 'A'- 2)*Math.pow(10,count);	
-						}
-						else if(s.charAt(k)>'W'){
-							System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' - 3));
-							num1 += (s.charAt(k) - 'A'- 3)*Math.pow(10,count);
-						}
-						else{
-							System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' + 1));
-							num1 += (s.charAt(k) - 'A')*Math.pow(10,count);
-						}
-						flag++;
-					}
-					//2ª Geração
-					else if((k>11 && k<14) && Character.isLetter(s.charAt(k))){
-						System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A'+ 46));
-						num1 += (s.charAt(k) - 'A' + 46)*Math.pow(10,count);
-						flag++;
-					}
-					//3ª Geração
-					else if((k>14 && k<17) && Character.isLetter(s.charAt(k)) && flag == 0){
-						System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' + 93));
-						num1 += (s.charAt(k) - 'A' + 93)*Math.pow(10,count);
-					}
-					//4ª Geração
-					else if((k>14 && k<17) && Character.isLetter(s.charAt(k)) && flag == 1){
-						System.out.println("Letra: " +s.charAt(k)+ " valor: "+(s.charAt(k) - 'A' + 103));
-						num1 += (s.charAt(k) - 'A' + 103)*Math.pow(10,count);
-					}
-					//Numeros
-					else{
-						System.out.println("Numero: "+s.charAt(k) + " valor: "+((s.charAt(k)) - '0'));
-						num2 += (((s.charAt(k)) - '0')*Math.pow(10,count));
-					}
-					count--;
-					System.out.println("Numero2: " + num2);
-				}
+			for(int i = 9; i<17; i++){
+				if(s.charAt(i) != '-') m2 = m2 + s.charAt(i);
 			}
 
-			System.out.println("Result: "+(num1-num2));
-		
-			*/
+			int g1 = matricula(m1);
+			int g2 = matricula(m2);
+
+			int sum1 = soma(m1,g1);
+			int sum2 = soma(m2,g2);
+
+			System.out.println(m1 + "->Geração: " + matricula(m1) + ", Soma: " + sum1);
+			System.out.println(m2 + "->Geração: " + matricula(m2) + ", Soma: " + sum2);
+
+			if(sum2-sum1>=0) System.out.println("Result: " + (sum2-sum1));
+			if(sum2-sum1<0) System.out.println("Result: " + (sum1-sum2));
+
 		}
 	}
 }
