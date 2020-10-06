@@ -1,0 +1,51 @@
+My ideia was, to create an char**, where I would store each line of the file or stdin, then after each file/stdin read I would go trough the char** and check if the word was there, and somehow flag that line. Before reading the next file I would print the content according to the options, witch I have stored on a struct with the char**
+
+A better idea would be to only read in and process one line of input at a time. If that line has the word in question, print it out. Otherwise go on to the next line. This simplifies everything immensely.
+
+I don't know how to work with char**, I've been testing with a word and input for shell with 4 lines, and in the last lines of the code added a printf to control why the char** doens't have anything
+
+Well, first off, I would use fgets to read in the data. That would make everything so much easier.
+
+Let's go through what you're doing and see where things break down.
+
+First you allocate room for 100 strings:
+
+list.lineAll = malloc(sizeof(char*)*100);
+So far, so good. Then you allocate room for the string itself:
+
+list->lineAll[counter] = malloc(sizeof(char*)*1000);
+Here, I think you made a simple mistake, and used sizeof(char*) instead of sizeof(char), so instead of making room for strings up to 1000 characters long, they're 4000 to 8000 characters long. This isn't a big deal except that it wastes memory.
+
+But there's a bigger mistake! You're re-allocating the memory every for every single character read. This throws away the last character and replaces it with a new string, certainly not what you wanted. It's also a memory leak.
+
+Here you read in a character:
+
+char ch1 = ' ';
+// ...
+ch1 = getchar();
+However, if we look at the documentation, we see that getchar() returns an int. This is important because EOF is not actually a character itself, but a special flag that is used to mark the end of the input.
+
+Here's how you terminate the line:
+
+list->lineAll[counter][i+1] = '\n';
+There's two problems here. The i+1 should probably just be i. Also, you need to be null-terminating the string, so use '\0' instead of '\n'.
+
+Something that's missing are the calls to free() to release any allocated memory. Other than that you seem to be handling the char** mostly correctly!
+
+Instead, switch to fgets to read the input and most of the other problems will fix themselves.
+
+When I call the function I usually call it "./mygrep word -" and it works, altough when I call it "./mygrep word " doesnt work and I don't know why
+
+It looks like you're assuming that you'd get an extra command line argument that consists of a single space? No, that's not going to happen. The shell (which processes the command line and then calls your program) will leave off any trailing spaces. If you want a space as a command line option then you'll need to wrap it in quotation marks.
+
+Edit: a couple other problems:
+
+Your input loop tries to put the EOF character into a line. A very common way of handling this is to do the read in the condition of the loop like this:
+
+while ( (ch1 = getchar()) != EOF )
+When you switch to fgets you can do the same thing:
+
+while ( fgets(list->lineAll[counter], 1000, stdin) )
+Also, you're not using the right array index here:
+
+for(int j = 0; j<counter; j++) printf("%s\n",list->lineAll[counter]);

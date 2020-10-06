@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+class Jogo{
+    private int n; //Tamanho do tabuleiro
+    private char m[][]; // Tabuleiro
+
+    Jogo(int n){ //Contrutor
+	this.n = n;
+	m = new char[n][n];
+    }
+    
+    //  Leitura de input para o tabuleiro
+    void readgame(Scanner in) {
+	for (int i=0; i<n; i++) {
+	    String buf = in.next();
+	    for (int j=0; j<n; j++)
+		m[i][j] = buf.charAt(j);
+	}
+    }
+    //Imprime o jogo 
+    void printgame(){
+	for(int i = 0; i<n; i++){
+	    for(int j = 0; j<n; j++){
+		System.out.print(m[i][j]);
+	    }
+	    System.out.println("");
+	}
+    }    
+}
+
+public class ED004_1{
+    public static void main(String args[]){
+	Scanner in = new Scanner(System.in);
+	int n = in.nextInt();
+	Jogo jogo = new Jogo(n);
+	jogo.readgame(in);
+	jogo.printgame();
+    }
+}

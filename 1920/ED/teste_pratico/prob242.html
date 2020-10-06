@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED242] Lagos</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED242] Lagos</font></h1>
+
+<p><font color="red"><p>Neste problema deverá submeter uma classe <b>ED242</b> contendo um programa completo para resolver o problema (ou seja, com o método main).<br>
+Não será adicionado nenhum código base ao seu programa, pelo que tem de incluir na submissão quaisquer classes que sejam necessárias para além das classes do próprio Java.
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/_teste_p2_/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituído pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<p><img src="242.png" align="right"><p>Estruturolândia é uma bela ilha no meio do Oceano Pacífico cheia de lagos. O seu mapa pode ser visto como uma matriz de <i>L</i> linhas por <i>C</i> colunas. Cada uma das células desta matriz pode ser água ('.') ou terra ('#'). O mapa está cercado por oceano, ou seja, se fossem representadas as células à volta da matriz, seriam todas de água do oceano.
+
+<p>Um <i>lago</i> é uma região maximal de células de água conectadas pelos seus lados (vertical ou horizontalmente) que não esteja conectado ao oceano. Dito de outro modo, um lago é um conjunto de células de água tal que é possível ir de qualquer uma das células para outra célula, nenhuma das células está na borda da matriz, e não é possível adicionar mais nenhuma célula de água a esse conjunto que esteja conectada por um dos lados.
+
+<p>O presidente da Estruturolândia pretende alterar um pouco o terreno. Para isso tem disponível escavadoras que conseguem encher com areia uma célula de água, transformando-a numa célula de terra. O seu objectivo é saber <b>qual o menor número de células que tem de encher com areia para que a ilha passe a ter exactamente <i>K</i> lagos</b>. Nota que é garantido que inicialmente existem mais do que <i>K</i> lagos em Estruturolândia.
+
+<h3>Input</h3>
+
+<p>Na primeira linha de input vem um inteiro <i>K</i>, indicando o número de ilhas que o presidente pretende passar a ter (<i>0 &le; K &le; 1000</i>).
+
+<p>Seguem-se <i>L</i> linhas, cada uma com <i>C</i> caracteres que podem ser '.' (água) ou '#' (terra). É garantido que <i>3 &le; L &le; 100</i> e <i>3 &le; C &le; 100</i>.
+
+<h3>Output</h3>
+
+<p>O output do seu programa deve ser uma linha contendo um inteiro: a quantidade mínima de células que devem ser enchidas para que a ilha passe a ter exatamente <i>K</i> lagos.
+  
+<h3>Exemplos de Input/Output</h3>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 1</th>
+    <th>Output 1</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>0
+####
+#..#	
+#..#
+####
+#..#
+    </td>
+    <td valign="top"><pre>4</pre></td>
+  </tr>
+</table>
+
+<p>Explicação do input/output 1: em baixo não é um lago porque está ligado à borda do mapa. É necessário encher as 4 células do lado de cima.</p>
+
+<p>&nbsp;
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 2</th>
+    <th>Output 2</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>1
+##.#######.
+##.##...##.
+##.##..#.##
+########.##
+##....#####
+##########.
+    </td>
+    <td valign="top"><pre>6</pre></td>
+  </tr>
+</table>
+
+<p>&nbsp;
+  
+<hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

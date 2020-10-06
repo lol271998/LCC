@@ -1,0 +1,10 @@
+struct elemento{
+    int valor; // um inteiro lido
+    int ocorrencias; // numero de vezes que esse inteiro foi lido
+};
+typedef struct elemento ELEMENTOS;
+ELEMENTOS *a = NULL;
+
+int main(int argc, char* argv[]){
+  
+}

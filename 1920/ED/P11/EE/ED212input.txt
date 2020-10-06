@@ -1,0 +1,4 @@
+3
+6 3 2 N 1 N N 5 N 7 N N 10 8 N 9 N N 25 N N	
+1 2 3 4 5 6 N N N N N N N	
+14 4 3 N N 9 7 5 N N N N 18 16 15 N N 17 N N 20 N N

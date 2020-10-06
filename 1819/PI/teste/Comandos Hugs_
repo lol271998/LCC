@@ -1,0 +1,11 @@
+Comandos Hugs:
+:t length 
+	-Dá o tipo da função
+:LOAD file
+	-Carrega o ficheiro
+:Reload
+	-Recarrega o ficheiro
+
+Int vs Integer
+	Int tem limite máximo
+	Integer não tem limite

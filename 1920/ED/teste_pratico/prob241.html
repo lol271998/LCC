@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED241] Submissões</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED241] Submissões</font></h1>
+
+<p><font color="red"><p>Neste problema deverá submeter uma classe <b>ED241</b> contendo um programa completo para resolver o problema (ou seja, com o método main).<br>
+      Pode assumir que no Mooshak <b>terá acesso a todas as classes base dadas nas aulas, incluindo as de árvores binárias BTree, BSTree e BSTMap</b> (não precisa de as incluir na submissão).<br>
+Pode fazer download de todas as classes num <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/EDados1920.zip">arquivo zip</a> ou ver as <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/">classes uma a uma</a>.
+</font>     
+</p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/_teste_p2_/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<p><img src="241.png" align="right">Suponha que tem disponível uma lista de submissões de programas. Uma submissão é caracterizada por um triplo (Aluno,Problema,Resultado), onde um <i>Aluno</i> é o nome do aluno, <i>Problema</i> é o nome de um problema de programação que o aluno estava a tentar resolver e <i>resultado</i> é o resultado da submissão (se foi aceite ou não).
+
+<p>A sua tarefa é fazer algumas estatísticas sobre estas submissões. Nomeadamente, deve calcular:</p>
+
+  <ul>
+    <li><b>[flag 1]</b> a quantidade de alunos diferentes que tiveram pelo menos uma submissão <i><font color="#880000">(25% da cotação deste problema)</font></i>
+    <li><b>[flag 2]</b> qual o problema com mais submissões (sendo garantido que existe um único problema que foi submetido mais vezes que os outros) <i><font color="#880000">(25% da cotação deste problema)</font></i>
+    <li><b>[flag 3]</b> quais os problemas mais acessíveis, nomeadamente os que tenham um rácio de submissões aceites maior ou igual a 50%, imprimidos por ordem alfabética. O rácio é igual ao total de submissões a dividir pelo números de submissões com resultado "Accepted" <i><font color="#880000">(25% da cotação deste problema)</font></i>
+    <li><b>[flag 4]</b> quais os alunos que resolveram todos os problemas, ou seja que obtiveram "Accepted" pelo menos uma vez em todos os problemas (sendo que é garantido que todos os problemas têm pelo menos uma submissão); os alunos devem vir por ordem alfabética <i><font color="#880000">(25% da cotação deste problema)</font></i>
+  </ul>
+  
+<p>Imagine por exemplo que tinha a seguinte lista de 10 submissões:</p>
+
+  <table bgcolor="black" cellspacing="1">
+    <tr bgcolor="white">
+      <th>Aluno</th>
+      <th>Problema</th>
+      <th>Resultado</th>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">PedroRibeiro</td>
+      <td align="center">ED213</td>
+      <td align="center"><font color="#006600">Accepted</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">ManuelPinto</td>
+      <td align="center">ED213</td>
+      <td align="center"><font color="#006600">Accepted</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">PedroRibeiro</td>
+      <td align="center">ED212</td>
+      <td align="center"><font color="#006600">Accepted</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">ManuelPinto</td>
+      <td align="center">ED213</td>
+      <td align="center"><font color="#660000">WrongAnswer</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">ClaudioCunha</td>
+      <td align="center">ED212</td>
+      <td align="center"><font color="#660000">RuntimeError</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">ClaudioCunha</td>
+      <td align="center">ED211</td>
+      <td align="center"><font color="#660000">CompileError</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">PedroRibeiro</td>
+      <td align="center">ED211</td>
+      <td align="center"><font color="#006600">Accepted</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">PedroRibeiro</td>
+      <td align="center">ED212</td>
+      <td align="center"><font color="#006600">Accepted</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">ManuelPinto</td>
+      <td align="center">ED213</td>
+      <td align="center"><font color="#660000">CompileError</font></td>
+    </tr>
+    <tr bgcolor="white">
+      <td align="center">AntonioFerreira</td>
+      <td align="center">ED213</td>
+      <td align="center"><font color="#660000">TimeLimitExceeded</font></td>
+    </tr>
+  </table>
+
+<p>Para esta lista de avaliações as estatísticas eram as seguintes:
+  <ul>
+    <li><b>[flag 1]</b> o número de alunos diferentes é 4 (PedroRibeiro, ManuelPinto, ClaudioCunha e AntonioFerreira).
+    <li><b>[flag 2]</b> o problema com mais submissões é o ED213 (5 submissões)
+    <li><b>[flag 3]</b> Os problemas com rácio de aceites superior a 50% são, por ordem alfabetica, o ED211 e o ED212. Os rácios são os seguintes
+      <ul>
+	<li><font color="#006600">ED211: rácio = 1/2 = 0.5</font>
+	<li><font color="#006600">ED212: rácio = 2/3 = 0.6(6)</font>
+	<li><font color="#660000">ED213: rácio = 2/5 = 0.4</font>
+      </ul>
+    <li><b>[flag 4]</b> existem 3 problemas (ED211, ED212 e ED213) e o único aluno que os resolveu a todos é o PedroRibeiro.
+  </ul>
+
+<h3>Input</h3>
+
+<p>A primeira linha de input contém um inteiro <b>F</b>, a <i>flag</i> (1, 2, 3 ou 4) indicando qual estatística deve calcular, de acordo com o atrás descrito.
+
+<p>A segunda linha contém um inteiro <b>N</b>, a quantidade de submissões (<i>1&leq;N&leq;1000</i>). Seguem-se <b>N</b> linhas descrevendo as submissões em si, cada uma no formato <tt>NOME PROBLEMA RESULTADO</tt>, onde <tt>NOME</tt>, <tt>PROBLEMA</tt> e <tt>RESULTADO</tt> são palavras sem espaços.
+
+<h3>Output</h3>
+
+<p>O output do seu programa depende da flag dada:
+  <ul>
+    <li><b>Se a flag for 1</b>, o output deve ser uma linha contendo um único inteiro, a quantidade de alunos diferentes que tiveram pelo menos uma submissão.
+    <li><b>Se a flag for 2</b>, o output deve ser uma linha contendo uma palavra e um inteiro (separados por um espaço): o nome do problema que foi submetido mais vezes e o número de vezes que foi submetido (é garantido que existe um único problema que foi submetido mais vezes que todos os outros).
+    <li><b>Se a flag for 3</b>, o output deve conter os nomes dos problemas com rácio de aceites &ge;50%, um por linha, por ordem alfabética.      
+    <li><b>Se a flag for 4</b>, o output deve conter os nomes dos alunos que resolveram todos os problemas, um por linha, por ordem alfabética (um mesmo aluno pode ter várias submissões aceites no mesmo problema, pelo que não chega contar o número de submissões aceites).      
+
+  </ul>
+
+<p><i>Note que para estabelecer a ordem alfabética pode usar a ordem natural das Strings, não tendo de se preocupar com o facto das letras serem maiúsculas ou minúsculas</i>.
+  
+  
+<h3>Dicas</h3>
+
+<p>É livre para fazer fazer como quiser, mas é sugerido fazer da seguinte maneira:
+  <ul>
+    <li><b>[flag 1]</b> pode usar uma árvore binária de pesquisa (<i>BSTree</i>). Se inserir todos os nomes na árvore (de que tipo devem ser os nós da árvore?), saber quantos existem é saber quantos nós tem a árvore... (também pode usar um dicionário para o mesmo efeito).
+    <li><b>[flag 2]</b> use um TAD dicionário (<i>BSTMap</i>) para guardar o número de submissões de cada problema (de que tipos devem ser as chaves e os valores deste dicionário?). De cada vez que lê uma submissão, é só ir ao dicionário e incrementar a frequência do respetivo problema. No final basta percorrer todos os problemas encontrar o mais frequente (ou pode optar por, cada vez que incrementa, verificar se passou a ter um novo máximo).
+    <li><b>[flag 3]</b> use um outro TAD dicionário (<i>BSTMap</i>) para guardar o número de submissões aceites de cada problema (aquelas cujo resultado é igual a "Accepted": como comparar Strings?). No final percorra todos os problemas e imprima-os no caso do rácio ser >= 0.5, dividindo o valor correspondendo ao total de submissões (que está guardada no mapa da flag anterior) pela quantidade de accepted's. Em relação à ordem alfabética, como o dicionário está numa árvore de pesquisa, o método que as devolve percorrer a árvore <i>inorder</i>, logo estas já são obtidas precisamente por ordem alfabética!
+    <li><b>[flag 4]</b> precisa de uma maneira de guardar os problemas que cada aluno fez. Uma hipótese é usar um mapa onde as chaves são os alunos e os valores são... conjuntos (representados por árvores binárias). Assim, cada vez que vir uma submissão aceite, é só ir ao aluno e inserir o problema no conjunto correspondente (sendo que os conjuntos já tratam da parte de não contar repetidos). No final basta percorrer todos os alunos e verificar se o conjunto de problemas que ele fez tem tamanho igual à quantidade de problemas disponíveis (que pode saber vendo o mapa... das flags anteriores!)
+  </ul>
+
+<h3>Exemplos de Input/Output</h3>
+
+<p>Os quatro exemplos de input correspondem precisamente às quatro flags para o caso dado.</p>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 1</th>
+    <th>Output 1</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>1
+10
+PedroRibeiro ED213 Accepted
+ManuelPinto ED213 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 WrongAnswer
+ClaudioCunha ED212 RuntimeError
+ClaudioCunha ED211 CompileError
+PedroRibeiro ED211 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 CompileError
+AntonioFerreira ED213 TimeLimitExceeded
+    </td>
+    <td valign="top"><pre>4</pre></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 2</th>
+    <th>Output 2</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>2
+10
+PedroRibeiro ED213 Accepted
+ManuelPinto ED213 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 WrongAnswer
+ClaudioCunha ED212 RuntimeError
+ClaudioCunha ED211 CompileError
+PedroRibeiro ED211 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 CompileError
+AntonioFerreira ED213 TimeLimitExceeded
+    </td>
+    <td valign="top"><pre>ED213 5</pre></td>
+  </tr>
+</table>
+
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 3</th>
+    <th>Output 3</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>3
+10
+PedroRibeiro ED213 Accepted
+ManuelPinto ED213 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 WrongAnswer
+ClaudioCunha ED212 RuntimeError
+ClaudioCunha ED211 CompileError
+PedroRibeiro ED211 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 CompileError
+AntonioFerreira ED213 TimeLimitExceeded
+    </td>
+    <td valign="top"><pre>ED211
+ED212</pre></td>
+  </tr>
+</table>
+
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Input 1</th>
+    <th>Output 1</th>
+  </tr>
+  <tr>
+    <td>
+      <pre>4
+10
+PedroRibeiro ED213 Accepted
+ManuelPinto ED213 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 WrongAnswer
+ClaudioCunha ED212 RuntimeError
+ClaudioCunha ED211 CompileError
+PedroRibeiro ED211 Accepted
+PedroRibeiro ED212 Accepted
+ManuelPinto ED213 CompileError
+AntonioFerreira ED213 TimeLimitExceeded
+    </td>
+    <td valign="top"><pre>PedroRibeiro</pre></td>
+  </tr>
+</table>
+
+<p>&nbsp;
+  
+  <hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

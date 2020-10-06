@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED238] Código Binário</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED238] Código Binário</font></h1>
+
+<p><font color="red"><p>Neste problema deverá submeter uma classe <b>ED238</b> contendo um programa completo para resolver o problema (ou seja, com o método main).<br>
+Não será adicionado nenhum código base ao seu programa, pelo que tem de incluir na submissão quaisquer classes que sejam necessárias para além das classes do próprio Java.
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/teste_parte1/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<p><img src="238.jpg" align="right" width="300">Imagine que tem uma sequência de 0's e 1's e que pode modificar no máximo <i>K</i> elementos da sequência (ou seja alterar um elemento, trocando de 0 para 1 ou vice-versa). Qual seria a maior subsequência contígua de 1's que conseguiria formar?
+
+<p>Imagine por exemplo que tem a seguinte sequência:
+
+<pre>0001100111101011000010100000001110111</pre>
+
+<p>Se <i>K=0</i> (ou seja, não pode alterar nenhum elemento), então a maior subsequência que consegue formar tem tamanho 4:
+
+<pre>0001100<b><font color="green">1111</font></b>01011000010100000001110111</pre>
+
+<p>Se <i>K=1</i> (ou seja, pode alterar apenas um elemento), então a maior subsequência que consegue formar tem tamanho 7 (o elemento alterado está indicado a vermelho):
+
+<pre>000110011110101100001010000000<b><font color="green">111</font><font color="red">1</font><font color="green">111</font></b></pre>
+
+<p>Se <i>K=2</i> (ou seja, pode alterar dois elementos), então a maior subsequência que consegue formar tem tamanho 9 (os elementos alterados estão indicados a vermelho):
+
+<pre>0001100<b><font color="green">1111</font><font color="red">1</font><font color="green">1</font><font color="red">1</font><font color="green">11</font></b>000010100000001110111</pre>
+
+<p>Se <i>K=4</i> (ou seja, pode alterar quatro elementos), então a maior subsequência que consegue formar tem tamanho 13 (os elementos alterados estão indicados a vermelho):
+
+<pre>000<b><font color="green">11</font><font color="red">11</font><font color="green">1111</font><font color="red">1</font><font color="green">1</font><font color="red">1</font><font color="green">11</font></b>000010100000001110111</pre>
+
+<h2>O Problema </h2>
+
+<p>Dada uma sequência de <i>N</i> 0's e 1's e <i>Q</i> possíveis inteiros <i>K</i>, a sua tarefa e descobrir, para cada <i>K</i>, qual a maior subsequência contígua de 1's que consegue obter substituindo no máximo <i>K</i> 0's por 1's.
+
+<p>Uma solução "bruta" não passará no tempo limite (mas para um conjunto de testes valendo 30% dos pontos, <i>N</i> é tão pequeno que até algo pouco eficiente poderá passar). Para ter pontuação completa é necessário e expectável que faça uma solução linear para cada <i>K</i>, ou seja, a sua complexidade final deverá ser <b>O(Q * N)</b>
+
+<h2>Input</h2>
+
+<p>A primeira linha contém um inteiro <b>N</b>, o tamanho da sequência a considerar (1&le;N&le;100&nbsp;000). A segunda linha contém a sequência, formada por <b>N</b> zeros e uns.
+
+<p>A terceira linha contém um inteiro <b>Q</b>, a quantidade de K's a considerar (1&le;Q&le;100). A quarta linha contém <b>Q</b> inteiros (separados por um espaço), os vários <i>K</i>'s a considerar (0&le;K&le;N).
+
+<h2>Output</h2>
+
+<p>O output deve conter <b>Q</b> linhas, uma para cada <i>K</i> (na mesma ordem do input), contendo cada uma das linhas um único inteiro indicando o tamanho da maior sequência de 1's que se consegue formar mudando no máximo o número correspondente de dígitos da sequência original, como atrás descrito.
+
+<h2>Exemplo de Input/Output</h2>
+
+<table cellpadding="4" border="1">
+<tr>
+       <th>Input</th>
+       <th>Output</th>
+</tr>
+<tr>
+  <td valign="top"><pre>37
+0001100111101011000010100000001110111
+5
+0 1 2 4 3
+</pre></td>
+    <td valign="top"><pre>4
+7
+9
+13
+10
+</pre></td>
+</tr>
+</table>
+
+<p>Nota: o exemplo de input corresponde ao exemplo dado no enunciado: 4 é a resposta para <i>K=0</i>, 7 é a resposta para <i>K=1</i>, 9 é a resposta para <i>K=2</i> e 13 é a resposta para <i>K=4</i> e 10 é a resposta para <i>K=3</i>.
+
+<p>&nbsp;
+  
+<hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

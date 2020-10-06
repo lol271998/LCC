@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED240] Método Estático para Árvores</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED240] Método Estático para Árvores</font></h1>
+
+<p><font color="red">Neste problema deverá submeter uma classe <b>ED240</b> contendo um método estático <b>paths</b> como a seguir descrito (não é necessário um programa completo)<br>
+Pode assumir que no Mooshak <b>terá acesso a todas as classes base dadas nas aulas, incluindo as de árvores binárias</b> (não precisa de as incluir na submissão).<br>
+Pode fazer download de todas as classes num <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/EDados1920.zip">arquivo zip</a> ou ver as <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/">classes uma a uma</a>.
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/_teste_p2_/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<h2><font color="black">Método a submeter</font></h2>
+
+<p><li><b><tt>public static String[] paths(BTree&lt;Integer&gt; t)</tt></b> da classe <b><tt>ED240</tt></b>
+
+    <p>Deve devolver um array contendo todos os caminhos na árvore que vão dar ao valor mínimo que é possível encontrar na árvore. O tamanho do array deve ser igual ao número de vezes que o mínimo aparece na árvore, e os caminhos podem vir em qualquer ordem dentro do array (não precisa de se preocupar com a ordem).
+
+    <p>Cada caminho é representando por uma string contendo uma sequência de caracteres 'E' e 'D' indicando como chegar ao nó correspondente quando se começa na raíz. Se o nó for a raíz, o caminho é simplesmente "R". A figura seguinte ilustra alguns caminhos possíveis para chegar ao nó a vermelho.
+
+    <p><img src="240_paths.png" height="180">
+      
+    <p>Armado com este conhecimento, pode agora compreender a figura seguinte, que ilustra algumas árvores <i>t</i>, e qual o array que o método <i>ED240.paths(t)</i> deve devolver, contendo os caminhos para todas as ocorrências do valor mínimo, indicadas nos nós a vermelho (note que a ordem dos caminhos não tem de ser esta):
+
+    <p><img src="240_paths_v1.png" height="260">
+
+    <p>É garantido que as árvores testadas com o seu programa são pequenas (100 nós no máximo), pelo que não tem de se preocupar (demasiado) com a eficiência.
+
+<h2><font color="black">Exemplo de Input/Output</font></h2>
+
+<p>Os exemplos correspondem às três árvores da figura.</p>
+
+<table border="1">
+  <tr>
+    <th>Árvore <i>t</i> em <i>preorder</i></th>
+    <th>Exemplo de possível valor devolvido por <i>ED240.paths(t)</i></th>
+  </tr>
+  <tr>
+    <td align="left">2 3 4 2 N N N 5 N 8 N N 2 6 N 2 N N 25 N N</td>
+    <td>["R", "EEE", "D", "DED"]</td>
+  </tr>
+  <tr>
+    <td align="left">6 3 N 5 N 7 N N 10 8 N 9 N N 1 N N</td>
+    <td>["DD"]</td>
+  </tr>
+  <tr>
+    <td align="left">5 5 5 N N 5 N N 5 N N</td>
+    <td>["R","D","E","ED","EE"]</td>
+  </tr>
+</table>
+
+
+  <hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

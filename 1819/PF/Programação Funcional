@@ -1,0 +1,20 @@
+Ter cuidado com as identações!
+Comandos Hugs:
+:t length 
+	-Dá o tipo da função
+:load file (:l)
+	-Carrega o ficheiro
+:reload
+	-Recarrega o ficheiro
+
+Int vs Integer
+	Int tem limite máximo
+	Integer não tem limite
+
+EXPONENCIAÇÃO
+:t (^)
+	Num a, Integral b => a->b->a
+:t(^^)
+	Fracional a, Integral b => a->b->a
+:t(**)
+	Floating a => a->a->a 

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED239] Métodos para Árvores Binárias</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED239] Métodos para Árvores Binárias</font></h1>
+
+<p><font color="red"><p>Neste problema deverá apenas submeter uma classe <b>SinglyLinkedList&lt;T&gt;</b> (e não um programa completo).
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/_teste_p2_/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<h3>Código Base</h3>
+  
+<p><img src="arvores.png" alt="" align="right" border="0" width="300">O código base são as <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/arvores_binarias.html" target="_blank">classes de árvores binárias</a> dadas nas aulas. Pode fazer download de um único <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/EDados1920.zip">ficheiro zip</a> contendo todos os códigos-fonte (ficheiros .java) necessários. Use como base a classe <b>BTree&lt;T&gt;</b>, que é a única que deverá submeter.</p>
+
+
+<h2><font color="black">Métodos a Implementar</font></h2>
+
+<p>Deve acrescentar à classe dada os seguintes métodos (<b>não modificando nenhum dos métodos já existentes no código base</b>):
+
+<ul>
+  <li><font color="brown"><b>public int count()</b></font> <i>(50% da cotação)</i><br>
+    Deve devolver a <b>quantidade de nós que são filhos únicos</b>. Um filho único é um nó que é o único filho de um outro nó (ou seja, não tem nós irmãos). <b>Contar o número de filhos únicos é equivalente a contar o número de nós com apenas um filho.</b> A figura seguinte ilustra quatro árvores diferentes e o respectivo número de filhos únicos, indicados a amarelo.<br>
+    
+<img src="239_v1.png" height="180">
+    
+</ul>
+
+  
+<ul>
+  <li><font color="brown"><b>public int level(T v)</b></font> <i>(50% da cotação)</i><br>
+    Deve <b>devolver o nível de altura mais baixo (mais próximo da raíz) onde é possível encontrar um nó com valor <i>v</i></b>. Se o valor não for encontrado, o método deve devolver -1. A figura seguinte ilustra quatro possíveis árvores <i>t</i>, indicando a azul os nós com o valor <i>v</i>, a negrito os níveis contendo o valor, e a vermelho o nível mais baixo onde é possível encontrar um nó com esse valor.<br>
+    <img src="239_v3.png" height="260">
+</ul>
+</ul>
+<h2><font color="black">Notas</font></h2>
+
+<ul>
+  <li>Pode submeter código com apenas um dos métodos implementados (para obter pontuação parcial).
+  <li>Pode implementar métodos auxiliares, se quiser.
+  <li>Para testar na sua máquina deve criar uma árvore. Pode ler uma árvore com número inteiros usando o método <i>readIntTree</i> da classe <i>LibBTree</i> (um exemplo foi dado nas aulas e está disponível na classe <i>TestBTree</i>).
+  <li>Em todos os casos de teste as árvores têm tamanho máximo de 100 nós.
+</ul>
+
+<p>&nbsp;
+
+<h3>Exemplos de Input/Output para o método <i>count</i></h3>
+
+<p>Os exemplos correspondem às quatro árvores da figura.</p>
+
+<table border="1">
+  <tr>
+    <th>Árvore <i>t</i> em <i>preorder</i></th>
+    <th>Valor devolvido por <i>t.count()</i></th>
+  </tr>
+  <tr>
+    <td align="left">1 2 4 N N 5 N N 3 6 N N 7 N N</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td align="left">1 3 2 N N N 8 N 4 N N</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td align="left">4 3 2 1 N N N N N</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td align="left">1 N 3 2 N N 4 N N</td>
+    <td>1</td>
+  </tr>
+</table>
+
+
+<p>&nbsp;
+  
+<h3>Exemplos de Input/Output para o método <i>level</i></h3>
+
+<p>Os exemplos correspondem às quatro árvores da figura.</p>
+
+<table border="1">
+  <tr>
+    <th>Árvore <i>t</i> em <i>preorder</i></th>
+    <th>Chamada</th>
+    <th>Valor devolvido</th>
+  </tr>
+  <tr>
+    <td align="left">6 3 4 1 N N N 5 N 8 N N 2 2 N 9 N N 25 N N</td>
+    <td>t.level(2)</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td align="left">6 3 5 N N 5 N N 10 N N</td>
+    <td>t.level(5)</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td align="left">6 3 N 5 N 7 N N 10 8 N 9 N N 2 N N</td>
+    <td>t.level(1)</td>
+    <td>-1</td>
+  </tr>
+  <tr>
+    <td align="left">3 3 3 3 N N N N N</td>
+    <td>t.level(3)</td>
+    <td>0</td>
+  </tr>
+</table>
+
+
+<p>&nbsp;
+  
+  <hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED236] Métodos para Listas Ligadas Simples</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED236] Métodos para Listas Ligadas Simples</font></h1>
+
+<p><font color="red"><p>Neste problema deverá apenas submeter uma classe <b>SinglyLinkedList&lt;T&gt;</b> (e não um programa completo).
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/teste_parte1/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<h3>Código Base</h3>
+  
+<p><img src="linkedlist.png" alt="" align="right" border="0" width="500">Use como base a classe <b>SinglyLinkedList&lt;T&gt;</b> (<a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/lista_ligada_simples.html" target="_blank">ver código</a> | download de <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/Node.java" target="_blank">Node.Java</a> e <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/SinglyLinkedList.java" target="_blank">SinglyLinkedList.Java</a>), que representa uma lista ligada simples e tem disponíveis métodos para adicionar ou remover um elemento no início ou no final, devolver o tamanho, saber se a lista está vazia ou retornar representação em <i>string</i> para escrita (tal como dado nas aulas).</p>
+
+<h2><font color="black">Métodos a Implementar</font></h2>
+
+<p>Deve acrescentar à classe dada os seguintes métodos (<b>não modificando nenhum dos métodos já existentes no código base</b>):
+
+<ul>
+  <li><font color="brown"><b>public SinglyLinkedList&lt;T&gt; cut(int a, int k)</b></font> <i>(40% da cotação)</i><br>
+Deve <b>devolver uma nova lista que é uma cópia da lista original, mas apenas dos <i>k</i> elementos consecutivos a começar na posição <i>a</i></b> (inclusive), ou seja, todo os elementos no intervalo [a,a+k-1]. Por exemplo, se <i>list</i> for {2,4,6,8,10}, uma chamada a <i>list.cut(2,2)</i> deve devolver uma nova lista com conteúdo {6,8}, e uma chamada a <i>list.cut(0,3)</i> deve devolver uma nova lista com conteúdo {2,4,6}. <b>A lista inicial não deve ser modificada.</b> Assuma que as posições começam em zero. É também garantido que nos testes feitos ao seu método as posições são válidas, ou seja, <i>0&le;a&le;a+k-1&le;tamanho_da_lista-1</i>.
+</ul>
+
+  
+<ul>
+  <li><font color="brown"><b>public void shift(int k)</b></font> <i>(60% da cotação)</i><br>
+  Deve <b>"rodar" a lista <i>k</i> elementos para a esquerda</b> (rodar um elemento é retirar o primeiro e acrescentá-lo no final). Por exemplo, se <i>list</i> for {'a','b','c','d','e'}, uma chamada a <i>list.shift(2)</i> deve fazer com que <i>list</i> fique a ser {'c','d','e','a','b'}, e uma chamada a <i>list.shift(4)</i> deve fazer com que <i>list</i> fique a ser {'e','a','b','c','d'}. É garantido que nos testes feitos ao seu método <i>0&le;k&le;tamanho_da_lista-1</i> (se for zero, a lista deve ficar igual).
+</ul>
+</ul>
+
+<h2><font color="black">Notas</font></h2>
+
+<ul>
+  <li>Pode submeter código com apenas um dos métodos implementados (para obter pontuação parcial).
+  <li>Em todos os casos de teste as listas têm tamanho máximo de 100 elementos, com a excepção do <b>último caso de teste do método <i>shift</i> (valendo 20% da cotação), onde a lista pode ter 50 mil elementos</b>, pelo que nesse caso a sua solução não poderá ser quadrática (ou pior) no número de elementos da lista original para passar no tempo limite.
+  <li>Pode implementar métodos auxiliares, se quiser.
+  <li>Para testar na sua máquina deve criar uma lista (pode criar no código ou ler a partir de um input) e chamar o método correspondente.
+</ul>
+
+<p>&nbsp;
+
+<h3>Exemplos de Input/Output para o método <i>cut</i></h3>
+
+<table border="1">
+  <tr>
+    <th>Lista inicial</th>
+    <th>Chamada</th>
+    <th>O que deve ser devolvido</th>
+  </tr>
+  <tr>
+    <td align="center">list = {2,4,6,8,10}</td>
+    <td align="center">list.cut(2,2)</td>
+    <td align="center">new_list = {6,8}</td>
+  </tr>
+  <tr>
+    <td align="center">list = {2,4,6,8,10}</td>
+    <td align="center">list.cut(0,3)</td>
+    <td align="center">new_list = {2,4,6}</td>
+  </tr>
+    <tr>
+    <td align="center">list = {'a','b','c','d'}</td>
+    <td align="center">list.cut(1,1)</td>
+    <td align="center">new_list = {'b'}</td>
+    </tr>
+  <tr>
+    <td align="center">list = {"estruturas","de","dados","e","muito","fixe"}</td>
+    <td align="center">list.cut(0,6)</td>
+    <td align="center">new_list = {"estruturas","de","dados","e","muito","fixe"}</td>
+  </tr>
+  <tr>
+    <td align="center">list = {0,1,2,3,4,5,6,7,8}</td>
+    <td align="center">list.cut(1,7)</td>
+    <td align="center">new_list = {1,2,3,4,5,6,7}</td>
+  </tr>
+
+</table>
+
+
+<p>&nbsp;
+  
+<h3>Exemplos de Input/Output para o método <i>shift</i></h3>
+
+<table border="1">
+  <tr>
+    <th>Lista inicial</th>
+    <th>&nbsp; Chamada &nbsp; </th>
+    <th>Estado da lista depois da chamada</th>
+  </tr>
+  <tr>
+    <td align="center">list = {'a','b','c','d','e'}</td>
+    <td align="center">list.shift(2)</td>
+    <td align="center">list = {'c','d','e','a','b'}</td>
+  </tr>
+  <tr>
+    <td align="center">list = {'a','b','c','d','e'}</td>
+    <td align="center">list.shift(4)</td>
+    <td align="center">list = {'e','a','b','c','d'}</td>
+  </tr>
+  <tr>
+    <td align="center">list = {1,2,42}</td>
+    <td align="center">list.shift(0)</td>
+    <td align="center">list = {1,2,42}</td>
+  </tr>
+  <tr>
+    <td align="center">list = {"ola","mundo","cruel"}</td>
+    <td align="center">list.shift(1)</td>
+    <td align="center">list = {"mundo","cruel","ola"}</td>
+  </tr>
+</table>
+
+<p>&nbsp;
+  
+  <hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>

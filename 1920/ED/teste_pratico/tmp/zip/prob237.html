@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<title>[ED237] Round-Robin</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<style>
+	  table,tr,td,th {
+	    border-collapse: collapse;
+	    border: 1px solid black;
+	  }
+
+	  th, td {
+	  padding: 4px;
+	  text-align: left;
+	  vertical-align: top;
+	  }
+
+	  .darkgreen {
+	  color: #008800;
+	  font-weight: bold;
+	  }
+
+	  .darkred {
+	  color: #880000;
+	  font-weight: bold;
+	  }
+	</style>
+	
+</head><body bgcolor="white">
+
+<h1><font color="black">[ED237] Round-Robin</font></h1>
+
+<p><font color="red">Neste problema deverá submeter uma classe <b>ED237</b> contendo um programa completo para resolver o problema (ou seja, com o método main).<br>
+Pode assumir que no Mooshak <b>terá acesso a todas as classes base dadas nas aulas, incluindo as de listas, pilhas e filas</b> (não precisa de as incluir na submissão).<br>
+Pode fazer download de todas as classes num <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/EDados1920.zip">arquivo zip</a> ou ver as <a target="_blank" href="https://www.dcc.fc.up.pt/~pribeiro/aulas/edados1920/codigo/">classes uma a uma</a>.
+</font></p>
+
+<hr>
+
+<p><font color="blue"><b>[PROBLEMAS PARA DOWNLOAD]</b>
+Para precaver uma possível intermitência na ligação de internet, podem e devem fazer download de todos os problemas em:<br><tt>https://mooshak.dcc.fc.up.pt/~edados/teste_parte1/NUM_MECANOGRAFICO.zip</tt> (onde <tt>NUM_MECANOGRAFICO</tt> deve ser substituido pelo vosso número mecanográfico)</font>
+
+<hr>
+
+<h2><img src="237.jpg" width="400" align="right"><font color="black">Problema</font></h2>
+
+Suponha que tem uma fila de processos para serem executados por um processador e que usa o seguinte algoritmo de <i>scheduling</i> com uma estratégia <i>round-robin:</i>
+
+<ol>
+  <li>Pega no primeiro processo da fila e executa-o durante um máximo de <i>T</i> segundos
+  <li>Se o processo ainda não terminou, é enviado para o final da fila passando a faltar menos <i>T</i> segundos para ele terminar
+  <li>Volta ao primeiro ponto, continuando a processar sempre o primeiro processo da fila até todos os processos terem terminado. 
+</ol>
+
+<p>Imagine por exemplo que <i>T=5</i> e que tinha a seguinte fila, onde o número indica o tempo restante. O processador iria passar por 7 iterações antes de terminar:</p>
+
+<p><b><font color="blue">Tempo actual: 0 segundos</font> (0 iterações do processador)</b>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">emacs<br>9</td>
+    <td width="80">firefox<br>3</td>
+    <td width="80">bash<br>12</td>
+    <td width="80">dia<br>5</td>
+  </tr>    
+</table>
+  
+<p>O processador começa por executar <i>emacs</i> durante 5 segundos. Ficam ainda a faltar 4 segundos e esse processo é agora colocado no final da fila:</p>
+
+<p><b><font color="blue">Tempo actual: 5 segundos</font> (1 iteração do processador)</b>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">firefox<br>3</td>
+    <td width="80">bash<br>12</td>
+    <td width="80">dia<br>5</td>
+    <td width="80">emacs<br>4</td>	    
+  </tr>    
+</table>
+
+<p>Como <i>firefox</i> tem menos tempo do que 5 segundos, é executado durante os 3 segundos que precisa e termina. O algoritmo continua a ser executado até terminarem todos os processos:</p>
+
+<p><b><font color="blue">Tempo actual: 8 segundos</font> (2 iterações do processador)</b> <font color="#770000">[termina "firefox"]</font>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">bash<br>12</td>
+    <td width="80">dia<br>5</td>
+    <td width="80">emacs<br>4</td>
+  </tr>    
+</table>
+
+<p><b><font color="blue">Tempo actual: 13 segundos</font> (3 iterações do processador)</b>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">dia<br>5</td>
+    <td width="80">emacs<br>4</td>
+    <td width="80">bash<br>7</td>
+  </tr>    
+</table>
+
+<p><b><font color="blue">Tempo actual: 18 segundos</font> (4 iterações do processador)</b> <font color="#770000">[termina "dia"]</font></b>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">emacs<br>4</td>
+    <td width="80">bash<br>7</td>
+  </tr>    
+</table>
+
+<p><b><font color="blue">Tempo actual: 22 segundos</font> (5 iterações do processador)</b> <font color="#770000">[termina "emacs"]</font></b>
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">bash<br>7</td>
+  </tr>    
+</table>
+
+<p><b><font color="blue">Tempo actual: 27 segundos</font> (6 iterações do processador)</b>  
+<table bgcolor="black">
+  <tr bgcolor="white">
+    <td width="80">bash<br>2</td>
+  </tr>    
+</table>
+
+<p><b><font color="blue">Tempo actual: 29 segundos</font> (7 iterações do processador)</b> <font color="#770000">[termina "bash"]</font></b><br>
+<b><font color="red">Fila vazia</font></b>
+
+<p>A sua tarefa é escrever um método para simular este processo, escrevendo para o ecrã cada vez que termina um processo uma linha no formato <tt>NOME_PROCESSO a b</tt>, onde <i>a</i> é o tempo quando o processo terminou e <i>b</i> é o número de iterações do processador quando tal aconteceu. Por exemplo, se fosse dada a fila anterior e com <i>T=5</i>, o output devia ser:
+
+<pre>
+firefox 8 2
+dia 18 4
+emacs 22 5
+bash 29 7
+</pre>
+
+<p><b>Dicas:</b> <i>(é livre para fazer fazer como quiser, mas é sugerido fazer da seguinte maneira)</i>:
+  <ul>
+    <li>Crie uma classe <i>Process</i> para conter um processo, com dois atributos: <i>name</i> e <i>time</i> (tempo restante)
+    <li>Para representar os processos, use uma fila (<i>MyQueue&lt;Process&gt</i>), ou uma lista circular (<i>CircularLinkedList&lt;Process&gt</i>).
+    <li>Precisa de continuar a processar enquanto a fila (ou lista) não estiver vazia, dando sempre tempo de execução ao primeiro processo da fila (ou lista)
+    <li>Cuidado com os casos onde o processo tem menos tempo restante do que <i>T</i>
+  </ul>
+</p>
+
+<h2><font color="black">Input</font></h2>
+
+<p>A primeira linha contém um inteiro <b>T</b>, o tempo de execução máximo por iteração. A segunda linha contém um inteiro <b>N</b>, o número de processos da fila. Seguem-se <b>N</b> linhas com os processos no formato <tt>NOME_PROCESSO TEMPO_NECESSÁRIO</tt>. O nome é constituído unicamente por letras minúsculas e o tempo é um inteiro.
+
+<h2><font color="black">Output</font></h2>
+
+<p>O output deve conter <b>N</b> linhas, descrevendo os processos pela ordem em que foram terminando no formato <tt>NOME_PROCESSO TEMPO_TERMINAÇÃO NUM_ITERAÇÕES</tt>.
+
+<h2><font color="black">Exemplo de Input/Output</font></h2>
+
+<table cellpadding="4" border="1">
+<tr>
+       <th>Input</th>
+       <th>Output</th>
+</tr>
+<tr>
+  <td><pre>5
+4
+emacs 9
+firefox 3
+bash 12
+dia 5</pre></td>
+    <td valign="top"><pre>firefox 8 2
+dia 18 4
+emacs 22 5
+bash 29 7</pre></td>
+</tr>
+</table>
+
+  <hr>
+
+<p align="center"><b>Teste Prático de Estruturas de Dados (CC1007)</b><br>
+  8 de Junho de 2020</p>
+<hr>
+
+
+<p>&nbsp;</p>
+
+
+  
+</body></html>
