@@ -1,16 +1,6 @@
 import java.util.Scanner;
 
 public class daa004{
-	public static String add(String num){
-		int incr = 0;
-		String nnum1 = "";
-		for(int i = num.length()-1; i>=0; i++){
-			int c = num.charAt(i) - '0';
-			if((c+1)==10){
-				
-			}
-		}
-	}
 
 	public static void main(String[] args) {
 		
@@ -18,31 +8,88 @@ public class daa004{
 
 		int n = in.nextInt();
 		in.nextLine();
-		System.out.println(n);
 
 		for(int t = 0; t<n; t++){
 
 			String line = in.nextLine();
 			String numbers[] = line.split(" ",2);
-			String num1 = numbers[0];
-			int num2 = Integer.parseInt(numbers[1]);  
-			int sum = 0;
-
-			for(int i = 0; i< num1.length(); i++){
-				sum+=num1.charAt(i)-'0';
+			String num = numbers[0];
+			
+			int nsum = Integer.parseInt(numbers[1]),sum = 0, size = num.length();
+			//System.out.println(nsum);
+			for(int i = 0; i<size; i++){
+				sum+=num.charAt(i)-'0';
 			}
 
-			String nnum1 = add(num1);
+			//System.out.println("Before change: "+num);
 			
-			while(sum<num2){
-				add(num);
+			//Adicionar 1
+			if(num.charAt(size-1) == '9'){
+				for(int i = size-1; i>=0; i--){
+					if(num.charAt(i) != '9'){
+						char c = num.charAt(i);
+						c+=1;
+						num = num.substring(0,i) + c + num.substring(i,size-1);
+						break;
+					}
+					else{
+						num = num.substring(0,i) + '0' + num.substring(i,size-1);
+						sum--;
+					}
+				}
+			}
+			else{
+				char c = num.charAt(size-1);
+				c+=1;
+				num = num.substring(0,size-1) + c;
 			}
 
+			sum++;
 
-			System.out.println(num1);
-			System.out.println(num2);
-			
+			while(sum!=nsum){
+				if(num.charAt(size-1) == '9'){
+					for(int i = size-1; i>=0; i--){
+						if(num.charAt(i) != '9'){
+							char c = num.charAt(i);
+							c+=1;
+							num = num.substring(0,i) + c + num.substring(i+1);
+							sum++;
+							break;
+						}
+						else{
+							if(i == 0 && size-1 == 0){
+								num = "10";
+								sum = 1;
+								size = num.length();
+							}
+							else if(i == 0 && size-1 != 0){
+								num = "1" + num;
+								sum = sum - 9;
+								size = num.length();
+							}
+							else{
+								num = num.substring(0,i) + '0' + num.substring(i+1);
+								sum=sum-9;
+							}
+						}
+					}
+				}
 
+				else{
+
+					char c = num.charAt(size-1);
+					c+=1;
+					if(size - 1 == 0){
+						num = ""+c;
+						sum++;
+					}
+					else{
+						num = num.substring(0,size-1) + c;
+						sum++;
+					}
+				}
+			}
+			System.out.println(num);
 		}
 	}
 }
