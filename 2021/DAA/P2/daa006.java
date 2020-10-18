@@ -18,7 +18,7 @@ public class daa006{
    		//Circulo dentro do Circulo
    		if(cis == 2) return Math.PI * cr * cr;
 
-   		double area = 0.000;
+   		double area = 0.0000;
    		if(l>=0.001){
 
    									//Quadrado inferior direito
@@ -34,57 +34,53 @@ public class daa006{
 		return area;
 	}
 
+	public static double distance(double x1, double y1, double x2, double y2) {
+		return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+	}
+
 	public static int circleANDSquare(double x1, double y1, double x2, double y2){
 		//x2>x1; y2>y1;
 
-		/*Circle inside 
-		System.out.println("(x1,y1): ("+x1+","+y1+")");
-		System.out.println("(x2,y2): ("+x2+","+y2+")");
-		System.out.println("(cx,cy): ("+cx+","+cy+") Raio -> "+cr);
-		*/
-
-		//Quadrado dentro
-		//Calcular qual o ponto mais longe do centro
-		Double dx = Math.max(cx - x1, x2 - cx); 
-		Double dy = Math.max(cy - y2, y1 - cx);
-
-		if(cr*cr >= dx*dx + dy*dy){
-			//System.out.println("Quadrado Dentro");
-			return 1;
-		}
-
 		//Ciruclo Dentro
-		if(){
+		if(cx+cr <= x2 && cy+cr <= y2 && cx-cr >= x1 && cy-cr >= y1){
+			//System.out.println("Ciruclo Dentro");
 			return 2;
 		}
 
+		//Quadrado está dentro do Circulo
+		if (distance(x1,y1,cx,cy) <= cr &&
+			distance(x1,y2,cx,cy) <= cr &&
+			distance(x2,y1,cx,cy) <= cr &&
+			distance(x2,y2,cx,cy) <= cr) return 1;
+		
 		//1º Quadrante
-		if(x1>=cx && y1>=cy){
-			double h2 = ((x1-cx)*(x1-cx)) + ((y1-cy)*(y1-cy));
-			if(Math.sqrt(h2)>=cr) return 0;
+		if(x1>=cx && y1>=cy && x2>=cx && y2>=cy){
+			//System.out.println("1ºQuadrante");
+			if(distance(x1,y1,cx,cy)>cr) return 0;
+			else return 3;
 		}
-
+		
 		//2º Quadrante
-		if(x2<=cx && y1>=cy){
-			double h2 = ((cx-x2)*(cx-x2)) + ((y1-cy)*(y1-cy));
-			if(Math.sqrt(h2)>=cr) return 0;
+		if(x2<=cx && y1>=cy && x1<=cx && y2>=cy){
+			//System.out.println("2ºQuadrante");
+			if(distance(x2,y1,cx,cy)>cr) return 0;
+			else return 3;
 		}
 
 		//3º Quadrante
-		if(x2<=cx && y2<=cy){
-			double h2 = ((cx-x2)*(cx-x2)) + ((cy-y2)*(cy-y2));
-			if(Math.sqrt(h2)>=cr) return 0;
+		if(x2<=cx && y2<=cy && x1<=cx && y1<=cy){
+			//System.out.println("3ºQuadrante");
+			if(distance(x2,y2,cx,cy)>cr) return 0;
+			else return 3;
 		}
 
 		//4º Quadrante
-		if(x1<=cx && y2>=cy){
-			double h2 = ((x1-cx)*(x1-cx)) + ((cy-y2)*(cy-y2));
-			if(Math.sqrt(h2)>=cr) return 0;
+		if(x1<=cx && y2>=cy && x2<=cx && y1>=cy){
+			//System.out.println("4ºQuadrante");
+			if(distance(x1,y2,cx,cy)>cr) return 0;
+			else return 3;
 		}
-
-		//System.out.println("Not inside, Nor Outside.");
 		return 3;
-			
 	}
 
 	public static void main(String[] args) {
