@@ -18,7 +18,7 @@ public class daa006{
    		//Circulo dentro do Circulo
    		if(cis == 2) return Math.PI * cr * cr;
 
-   		double area = 0.0000;
+   		double area = 0.000;
    		if(l>=0.001){
 
    									//Quadrado inferior direito
@@ -34,7 +34,7 @@ public class daa006{
 		return area;
 	}
 
-	public static int CircleANDSquare(double x1, double y1, double x2, double y2){
+	public static int circleANDSquare(double x1, double y1, double x2, double y2){
 		//x2>x1; y2>y1;
 
 		/*Circle inside 
@@ -54,8 +54,7 @@ public class daa006{
 		}
 
 		//Ciruclo Dentro
-		if(cx+cr <= x2 && cy+cr <= y2 && cx-cr >= x1 && cy-cr >= y1){
-			//System.out.println("Ciruclo Dentro");
+		if(){
 			return 2;
 		}
 
