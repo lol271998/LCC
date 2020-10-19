@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.io.*;
 import java.util.*;
 
-class Dna implements Comparable<Dna>{
+class Dna implements Comparable<Dna> {
 	public char letra;
 	public int occ;
 	public int freq;
