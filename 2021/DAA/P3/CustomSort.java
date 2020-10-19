@@ -26,9 +26,9 @@ class Person implements Comparable<Person> {
     //  - zero, se objecto for igual ao objecto "p"
     @Override
     public int compareTo(Person p) {
-	if (age < p.age) return +1;
-	if (age > p.age) return -1;
-	return name.compareTo(p.name);
+		if (age < p.age) return +1;
+		if (age > p.age) return -1;
+		return name.compareTo(p.name);
     }
 }
 
