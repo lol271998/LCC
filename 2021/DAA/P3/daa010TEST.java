@@ -11,34 +11,52 @@ public class daa010TEST{
         while(low < high){
 
             int middle = low + (high-low)/2;
-            if(v[low] == key) return low;
-            if(v[middle] == key) return middle;
-            if(v[high] == key) return high;
-
             
             System.out.println("Key: "+key);
             System.out.println("low: v["+low+"]: "+v[low]);
             System.out.println("middle: v["+middle+"]: "+v[middle]);
             System.out.println("high: v["+high+"]: "+v[high]);
-            System.out.println("--------------------------------");
+            System.out.println("--------------------------------");       
 
-            if(key-v[middle] == v[middle+1]-key){
-                System.out.print(v[middle]+" ");
-                low = middle + 1;
-                return low;
+            if(key<v[middle]){
+                if(key>v[middle-1]){
+                    if(key-v[middle-1] == v[middle]-key){
+                        System.out.print(v[middle-1]+" ");
+                        return middle;
+                    }
+                    if(key-v[middle-1]<v[middle]-key){
+                        return middle-1;
+                    }
+                    else if(key-v[middle-1]>v[middle]-key){
+                        return middle;
+                    }
+                }
+                high = middle;
             }
-            
-            if(Math.abs(key-v[low]) > Math.abs(key-v[middle])) low = middle+1;
-            else if(Math.abs(key-v[low]) <= Math.abs(key-v[middle])){
-                if(Math.abs(key-v[low])>Math.abs(key-v[high])) return high;
-                else high = middle-1;
+            else if(key>v[middle]){
+                if(key<v[middle+1]){
+                    if(key-v[middle] == v[middle+1]-key){
+                        System.out.print(v[middle]+" ");
+                        return middle+1;
+                    }
+                    if(key-v[middle]<v[middle+1]-key){
+                        return middle;
+                    }
+                    else if(key-v[middle]>v[middle+1]-key){
+                        return middle+1;
+                    }
+                }
+                low = middle+1;
             }
+            else return middle;
+  
             System.out.println("Key: "+key);
             System.out.println("low: v["+low+"]: "+v[low]);
             System.out.println("middle: v["+middle+"]: "+v[middle]);
             System.out.println("high: v["+high+"]: "+v[high]);
             System.out.println("--------------------------------");
             System.out.println("--------------------------------");
+            
         }
         return low;
     }
@@ -55,7 +73,7 @@ public class daa010TEST{
 
     public static void main(String[] args) {
 
-        int[] v =  {7,24,18,25,49,17,30,26,14,47};
+        int[] v =  {12,3,17,5,34,33};
         int n = v.length;
         int nPairs = fact(n)/(2*(fact(n-2)));
         int[] somas = new int[nPairs];
@@ -80,11 +98,11 @@ public class daa010TEST{
 
         System.out.println("");
 
-        int[] q = {39};
+        int[] q = {51};
         
         for(int i = 0; i<1; i++){
 
-            int a = binarysearch(somas,0,k-1,39);
+            int a = binarysearch(somas,0,k-1,41);
             System.out.println(somas[a]);
         }
 
