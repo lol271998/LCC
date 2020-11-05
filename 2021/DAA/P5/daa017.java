@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class daa017{
 
 	public static void count(boolean[][] pir, int n){
-		int[][] count = new int[n][n];
+		long[][] count = new long[n][n];
 
 		for(int i = 0; i<n; i++){
 			for(int j = 0; j<n; j++){
