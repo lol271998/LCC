@@ -70,17 +70,6 @@ public class daa010{
         return low;
     }
 
-
-	public static int fact(int n){
-		int res = 1;
-
-		for(int i = n-1; i>0; i--){
-			res=res*n;
-			n--;
-		}
-		return res;
-	}
-
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 
