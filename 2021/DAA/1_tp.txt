@@ -1,5 +1,8 @@
 1º Teste Prático
 
+Procurar no EMACS: Ctrl + s
+Save EMACS: Ctrl + x + s
+Undo: Ctrl + x ++ u
 
 1E - Greedy e Ordenação
 
@@ -380,14 +383,67 @@ class daa011{
 - Calcular as soluções de todos os subproblemas (trás para a frente)
 - Reconstruir a solução optima se necessário
 
+LER PIRAMIDES
+
+for(int i = n; i>=0; i--){
+	for(int j = 0; j<n-i; j++){
+		pir[i][j] = in.nextInt();
+	}
+}
+
+COMEÇAR DE BAIXO PARA CIMA
+
+for(int i = 1; i<n; i++){
+	for(int j = 0; j<n-i; j++){
+
+	}
+}
+
+Ideia básica piramide
+
+for(int i = n-1; i>=0; i--){
+	for(int j = 0; j<=i; j++){
+		p[i][j] += Math.max(p[i+1][j],p[i+1][j+1])
+	}
+}
+
+Ideia Básica Subseqência Crescente
+
+best[n] = 1;
+Para i = n-1 até 1 fazer
+	bes[i] = 1
+	Para j = i+1 até n fazer
+		Se num[j] > num[i] e 1 + best[j] > best[i] então
+			best[i] = 1 + best[j]
+
+Ideia Básica Problema do Troco
+
+coins[0] = 0;
+Para i = 1 até K fazer
+	coins[i] = inf //{Um valor superior a qualquer outro do conjunto}
+	Para j = 1 até N fazer
+		Se(S[j]<= i e 1 + coins[i-S[j] < coins[i]]) então //{Escolher o minimo entre o minimo anterior e o numero anterior}
+			coins[i] = 1 + coins[i - S[j]]
+
+Ideia Básica Problema da Estrada com Obras
+
+Inicializar count[][] com zeros
+count[L][C] = 1
+Para i = L até 1 fazer
+	Para j = C até 1 fazer
+		Se i<L e não(obra(i,j,NORTE)) então
+			count[i][j] += count[i+1][j]
+		Se j<C e não(obra(i,j,ESTE)) então
+			count[i][j] += count[i][j+1]
+
 /---------------------------------------------------------/
 
 [DAA 017] Pirâmides
 
-public class daa017 {
+public class daa017{
 
 	public static void count(boolean[][] pir, int n){
-		int[][] count = new int[n][n];
+		long[][] count = new long[n][n];
 
 		for(int i = 0; i<n; i++){
 			for(int j = 0; j<n; j++){
