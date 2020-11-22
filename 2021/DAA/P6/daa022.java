@@ -1,6 +1,8 @@
 // Codigo inicial para o problema [DAA 022] Arvores Red-Black
 // Pedro Ribeiro (DCC/FCUP)
 
+// Para a função isBST usei o código do site https://www.geeksforgeeks.org/a-program-to-check-if-a-binary-tree-is-bst-or-not/
+
 import java.util.Scanner;
 
 // Estrutura para representar um no da arvore
@@ -52,6 +54,51 @@ public class daa022 {
 		return 1 + size(t.left) + size(t.right);
     }
 
+    // Condição ser binary search tree
+    static boolean isBST(Node t){
+    	return isBST(t,minimum(t),maximum(t));
+    }
+
+    static boolean isBST(Node t, int min, int max){
+    	if(t.isNull) return true;
+    	if(t.value < min || t.value > max) return false;
+    	return isBST(t.left,min,t.value) && isBST(t.right,t.value,max);
+    }
+
+    // Condição de ter a root Black
+    static boolean isRoot(Node t){
+  		if(t.isBlack) return true;
+  		else return false;
+    }
+
+    // Condição de que todos os filhos de nós RED são BLACKS
+    static boolean isRed(Node t){
+    	if(t.isNull) return true;
+    	if(!(t.isBlack) && (!(t.left.isBlack))) return false;
+    	if(!(t.isBlack) && (!(t.right.isBlack))) return false;
+    	return isRed(t.left) && isRed(t.right);
+    }
+
+    // Condição de black property
+    static boolean isBlack(Node t){
+    	Node temp = t;
+    	int bh = 0;
+    	while(!(temp.isNull)){
+    		if(temp.isBlack) bh++;
+    		temp = temp.left;
+    	}
+    	//System.out.println(bh);
+    	return isBlack(t,bh,0);
+    }
+
+    static boolean isBlack(Node t, int bh, int bs){
+    	if(t.isNull && bs != bh) return false;
+    	if(t.isNull && bs == bh) return true;
+    	if((t.isBlack && !t.left.isNull) || (t.isBlack && !t.right.isNull) || (t.isBlack && t.left.isNull && t.right.isNull)) bs++;
+    	//System.out.println("t: "+t.value+" bs: "+ bs + " bh: "+bh);
+    	return isBlack(t.left,bh,bs) && isBlack(t.right,bh,bs);
+    }
+
     // ---------------------------------------------------
     
     public static void main(String args[]) {
@@ -61,7 +108,15 @@ public class daa022 {
 		for (int i=0; i<n; i++) {
 		    Node root = readPreOrder(in);
 		    
-		    System.out.printf("Tree with %d nodes (min=%d, max=%d)\n", size(root), minimum(root), maximum(root));
+		    //System.out.printf("Tree with %d nodes (min=%d, max=%d)\n", size(root), minimum(root), maximum(root));
+		    /*
+		    System.out.println("isRoot: "+(root.isBlack));
+		    System.out.println("isBST: "+isBST(root,root));
+		    System.out.println("isRed: "+isRed(root));
+		    System.out.println("isBlack: "+isBlack(root));
+		    */
+		    if(isBST(root) && isRed(root) && root.isBlack && isBlack(root)) System.out.println("SIM");
+		    else System.out.println("NAO");
 		}	
    	}
 }
