@@ -15,17 +15,6 @@ class daa025{
 		}
 	}
 
-	static int conect(){
-		int count = 0;
-		for(int i = 0; i<=n; i++){
-			if(!visited[i]){
-				count++;
-				dfs(i);
-			}
-		}
-		return count;
-	}
-
 	public static void main(String[] args) {
 
 		Scanner stdin = new Scanner (System.in);
@@ -37,8 +26,15 @@ class daa025{
 		for(int i = 0; i<edges; i++){
 			int a = stdin.nextInt();
 			int b = stdin.nextInt();
-			adj[a][b] = adj[b][a];
+			adj[a][b] = adj[b][a] = true;
 		}
-		System.out.println(conect());
+		int count = 0;
+		for(int i = 1; i<=n; i++){
+			if(!visited[i]){
+				count++;
+				dfs(i);
+			}
+		}
+		System.out.println(count);
 	}
 }
