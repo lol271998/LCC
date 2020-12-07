@@ -1,8 +1,12 @@
 import java.util.Scanner;
 
+class color{
+	public 
+}
+
 class daa025{
 
-	static int n; 					  // Número de nós do grafo
+	static int n; 			  // Número de nós do grafo
 	static boolean adj[][];   // Matriz de adjcências 
 	static boolean visited[]; // Nós visitados
 
