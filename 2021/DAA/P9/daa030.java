@@ -35,6 +35,7 @@ class Graph{
 		nodes[a].adj.add(b);
 	}
 
+	//A maior das distâncias entre ele próprio e outro qualquer nó
 	int excent(int[] l, int v){
 		excent = 0;		
 		
@@ -95,9 +96,12 @@ class daa030{
 		
 		for(int i = 1; i<=n; i++){
 			g.bfs(i);
+			// De todas as excentricidades a maior
 			d = Math.max(g.getExcent(),d);
+			// De todas as excentricidades a menor
 			r = Math.min(g.getExcent(),r);
 		}
+
 		System.out.println(d);
 		System.out.println(r);
 
@@ -117,7 +121,9 @@ class daa030{
 
 		for(int i = 1; i<=n; i++){
 			g.bfs(i);
+			//Nós centrais
 			if(g.getExcent() == r) c[sizec++] = i;
+			//Nós periféricos
 			if(g.getExcent() == d) p[sizep++] = i;
 		}
 

@@ -9,6 +9,23 @@ class daa026{
 	static int[] incx = {-1,1,0, 0,-1,-1, 1,1};
 	static int[] incy = { 0,0,1,-1,-1, 1,-1,1};
 
+	static int count(){
+		int max = 0;
+
+		for(int i = 0; i < rows; i++){
+				for(int j = 0;j < cols; j++){
+					if(m[i].charAt(j) == '#' && !visited[i][j]){
+						dfs(i,j);
+						//System.out.println("------------------------------");
+					}
+					max = Math.max(max,c);
+					c = 0;
+				}
+			}
+
+		return max;
+	}
+
 	static void dfs(int y,int x){
 		if(y<0 || y>=rows || x<0 || x>=cols) return;
 		if(visited[y][x] || m[y].charAt(x) != '#')	return;
@@ -30,6 +47,7 @@ class daa026{
 		int n = in.nextInt();
 		
 		for(int k = 0; k<n; k++){
+
 			rows = in.nextInt();
 			cols = in.nextInt();
 			m = new String[rows];
@@ -44,17 +62,8 @@ class daa026{
 				//System.out.println(m[i]);
 			}
 
-			for(int i = 0; i < rows; i++){
-				for(int j = 0;j < cols; j++){
-					if(m[i].charAt(j) == '#' && !visited[i][j]){
-						dfs(i,j);
-						//System.out.println("------------------------------");
-					}
-					if(max<=c) max = c;
-					c = 0;
-				}
-			}
-			System.out.println(max);
+			System.out.println(count());
+		
 		}
 	}
 }

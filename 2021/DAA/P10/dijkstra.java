@@ -65,19 +65,19 @@ class Graph {
     // Algoritmo de Dijkstra
     void dijkstra(int s) {
 	
-	//Inicializar nos como nao visitados e com distancia infinita
-	for (int i=1; i<=n; i++) {
-	    nodes[i].distance = Integer.MAX_VALUE;
-	    nodes[i].visited  = false;
-	}
+		//Inicializar nos como nao visitados e com distancia infinita
+		for (int i=1; i<=n; i++) {
+	   		nodes[i].distance = Integer.MAX_VALUE;
+	    	nodes[i].visited  = false;
+		}
 	
-	// Inicializar "fila" com no origem
-	nodes[s].distance = 0;
-	TreeSet<NodeQ> q = new TreeSet<>();
-	q.add(new NodeQ(0, s)); // Criar um par (dist=0, no=s)
+		// Inicializar "fila" com no origem
+		nodes[s].distance = 0;
+		TreeSet<NodeQ> q = new TreeSet<>();
+		q.add(new NodeQ(0, s)); // Criar um par (dist=0, no=s)
 
-	// Ciclo principal do Dijkstra
-	while (!q.isEmpty()) {
+		// Ciclo principal do Dijkstra
+		while (!q.isEmpty()) {
       
 	    // Retirar no com menor distancia (o "primeiro" do set, que e uma BST)
 	    NodeQ nq = q.pollFirst();

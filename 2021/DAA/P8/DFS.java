@@ -29,7 +29,7 @@ public class DFS {
 	    adj[a][b] = adj[b][a] = true;
 	}
 
-	dfs(1); // Pesquisa em profundidade a partir do no 1
-	System.out.println();       
+		dfs(1); // Pesquisa em profundidade a partir do no 1
+		System.out.println();       
     }
 }

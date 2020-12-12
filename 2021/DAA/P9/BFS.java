@@ -11,7 +11,7 @@ class Node {
     public int distance;            // Distancia ao no origem da pesquisa
 
     Node() {
-	adj = new LinkedList<Integer>();
+		adj = new LinkedList<Integer>();
     }
 }
 
@@ -21,10 +21,10 @@ class Graph {
     Node nodes[];    // Array para conter os nos
 
     Graph(int n) {
-	this.n = n;
-	nodes  = new Node[n+1]; // +1 se nos comecam em 1 ao inves de 0
-	for (int i=1; i<=n; i++)
-	    nodes[i] = new Node();
+		this.n = n;
+		nodes  = new Node[n+1]; // +1 se nos comecam em 1 ao inves de 0
+		for (int i=1; i<=n; i++)
+		    nodes[i] = new Node();
     }
 
     public void addLink(int a, int b) {

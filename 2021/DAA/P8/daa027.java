@@ -7,15 +7,33 @@ class daa027{
 	static boolean adj[][];
 	static int visited[]; //visited[i] = 0, não foi visitado
 
+	static boolean bipartido(){
+		int c = 1;
+		flag = 0;
+			for(int i = 1; i<=n; i++){
+				
+				if(visited[i]==0) dfs(i,c);
+				else dfs(i,visited[i]);
+				
+				if(flag == 1) return false;
+				//System.out.println("------------------------------\-------");
+			}
+			return true;
+	}
+
 
 	static void dfs(int v, int c){
 		visited[v] = c;
 		for(int i = 0; i<=n; i++){
-			System.out.printf("adj[%d][%d]: %b | visited[%d]: %d | visited[%d]: %d\n",v,i,adj[v][i],v,visited[v],i,visited[i]);
+			/*
+			System.out.printf("adj[%d][%d]: %b ",v,i,adj[v][i]);
+			System.out.printf("| visited[%d]: %d ",v,visited[v]);
+			System.out.printf("| visited[%d]: %d\n",i,visited[i]);
+			*/
 			if(adj[v][i]){
 				if(visited[i] == 0){
 					visited[i] = -c;
-					System.out.printf("visited[%d]: %d\n",i,visited[i]);
+					//System.out.printf("visited[%d]: %d\n",i,visited[i]);
 					dfs(i,-c);
 				}
 				else if(visited[i] == visited[v]){
@@ -45,23 +63,8 @@ class daa027{
 				adj[a][b] = adj[b][a] = true;
 			}
 
-			int c = 1;
-			for(int i = 1; i<=n; i++){
-				
-				if(visited[i]==0) dfs(i,c);
-				else dfs(i,visited[i]);
-				
-				if(flag == 1){
-					System.out.println("nao");
-					break;
-				}
-
-				System.out.println("-------------------------------------");
-			}
-			
-			if(flag == 0) System.out.println("sim");
-			
-			flag = 0;
+			if(bipartido()) System.out.println("sim");
+			else System.out.println("nao");
 		}
 	}
 }
