@@ -1,0 +1,27 @@
+26
+A 6 B I O U Y Z
+B 6 C F G P S U
+C 5 I K S U X
+D 7 A G H K L Q T
+E 5 L M V W X
+F 8 B D J M P T U Z
+G 5 B H I T Y
+H 12 A B D G K L P S U W Y Z
+I 10 B E H J K M P S U Y
+J 7 E F I K O Q V
+K 4 A B U Y
+L 5 B J M X Y
+M 3 B J R
+N 5 D I J T Y
+O 9 A C F K L M Q T U
+P 5 I K O W Z
+Q 5 F K L N W
+R 4 B F S U
+S 9 G J M N O Q R V X
+T 8 A B F L P R W X
+U 2 J K
+V 3 G S Z
+W 5 C I M T X
+X 6 D G H K S Z
+Y 6 E M O Q T X
+Z 5 C I O P S
