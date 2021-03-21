@@ -1,30 +1,36 @@
 package man;
-
 import static robocode.util.Utils.normalRelativeAngleDegrees;
 
 import robocode.*;
 
-public class My2ndRobot extends AdvancedRobot {
+public class Grupo13 extends AdvancedRobot {
 
 	int turnDirection = 1, scan = 0;
-	boolean peek, mid;
+	boolean peek, dodge;
 	double midx;
 	double midy;
-	int fireRate = 4;
 
 	public void run() {
 		moveToCenter();
+		dodge = false; 
 		peek = false;
 		while (!peek) {
 			turnRadarRight(Double.POSITIVE_INFINITY);
 		}
 	}
 
+	/**
+	 * 
+	 * Função responsável por mover o robot para o centro do mapa independetemente da posição inicial
+	 * 
+	 * 
+	 */
+
 	public void moveToCenter() {
-		double x = 0.0;
 		double y = 0.0;
-		double move = 0.0;
+		double x = 0.0;
 		double t = 0.0;
+		double move = 0.0;
 		midx = getBattleFieldWidth() / 2.0;
 		midy = getBattleFieldHeight() / 2.0;
 		x = midx - getX();
@@ -56,10 +62,11 @@ public class My2ndRobot extends AdvancedRobot {
 			turnRight(t);
 		}
 
-		// Meio
+		// Move em direção ao meio
 		ahead(move);
 	}
-
+	
+	// Se o robot estiver virado para Este
 	public void Este() {
 		double head = getHeading();
 
@@ -74,6 +81,7 @@ public class My2ndRobot extends AdvancedRobot {
 
 	}
 
+	//Se o robot estiver virado para Oeste
 	public void Oeste() {
 		double head = getHeading();
 
@@ -97,7 +105,7 @@ public class My2ndRobot extends AdvancedRobot {
 	 * 
 	 * 
 	 */
-	public void smartFire(double robotDistance, int f) {
+	public void smartFire(double robotDistance) {
 
 		if (robotDistance > 200 || getEnergy() < 15) {
 			fire(0.5);
@@ -155,13 +163,14 @@ public class My2ndRobot extends AdvancedRobot {
 	/**
 	 * 
 	 * De modo a não ser acertado por inimigo desvia se e dispara ajustando a mira
-	 * sempre que se desvia de modo a não acertar no inimigo
+	 * sempre que se desvia para não falhar o alvo
 	 * 
 	 * @param dist
 	 * @param e
 	 *
 	 */
 	public void dodge(Double dist, ScannedRobotEvent e) {
+		dodge = true;
 		double cat = cat() / 3.0;
 
 		// Desviar me dos tiros, angulo tem que ser consoante a distância
@@ -173,22 +182,22 @@ public class My2ndRobot extends AdvancedRobot {
 			// Posição à direita
 			ahead(cat);
 			turnGunLeft((turnDirection) * (90 - angle));
-			smartFire(dist - 2000, fireRate);
+			smartFire(dist - 2000);
 
 			// Posição Central
 			back(cat);
 			turnGunLeft((-turnDirection) * (90 - angle));
-			smartFire(dist - 2000, fireRate);
+			smartFire(dist - 2000);
 
 			// Posição à esquerda
 			back(cat);
 			turnGunLeft((-turnDirection) * (90 - angle));
-			smartFire(dist - 2000, fireRate);
+			smartFire(dist - 2000);
 
 			// Posição Central
 			ahead(cat);
 			turnGunLeft((turnDirection) * (90 - angle));
-			smartFire(dist - 2000, fireRate);
+			smartFire(dist - 2000);
 		}
 	}
 
@@ -197,58 +206,64 @@ public class My2ndRobot extends AdvancedRobot {
 	 * 
 	 * @return bool
 	 * 
-	 */
+	 *
 	public boolean isMid() {
 		mid = true;
 		return (getX() >= midx - 1 && getX() <= midx + 1) && (getY() >= midy - 1 && getY() <= midy + 1);
 	}
-
+	 */
+	
+	/**
+	 * 
+	 * Verifica se está no meio de mapa, ou se já esteve no meio do mapa.
+	 * Se o outro robô não se estiver parado, faz um movimento random. 
+	 * Se o outro robô estiver parado, verifica mais uma vez se está realmente parado, vira 
+	 * de modo a ficar com a arma perpendicular ao heading, e começa a disparar com o dodge
+	 * 
+	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
+		
 		peek = true;
 		
-		if (!isMid() && !mid) return;
-		else {
-			if (e.getVelocity() == 0) {
-				if (scan <= 2) {
-					randMovement(e);
-					scan++;
-					scan();
-				}
-				else {
-					if (e.getBearing() >= 0.5) {
-						turnDirection = 1;
-					} else {
-						turnDirection = -1;
-					}
 
-					double absoluteBearing = (getHeading() + e.getBearing());
+		double absoluteBearing = (getHeading() + e.getBearing());
 
-					turnRight(e.getBearing() + (turnDirection * 90));
-					double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
-					double dist = e.getDistance();
+		turnRight(e.getBearing() + (turnDirection * 90));
+		double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
+		double dist = e.getDistance();
 
-					turnGunRight(bearingFromGun);
-					dodge(dist, e);
-				}
-			}
+		turnGunRight(bearingFromGun);
+		dodge(dist, e);
+			
+			
 
-			else {
-				randMovement(e);
-			}
-		}
 	}
-
+	
+	/**
+	 * Movimento "random"
+	 * @param e
+	 *
 	public void randMovement(ScannedRobotEvent e) {
-		
-		ahead(100);
-		back(200);
-		ahead(100);
+		double dist = (Math.random() * ((100 - 10) + 1)) + 10;
+		ahead(dist);
+		back(dist*2);
+		ahead(dist);
 		turnLeft(90);
 	
 	}
+	
+	 */
 
 	public void onBulletMissed(BulletMissedEvent e) {
 		peek = false;
+	}
+	
+	public void onHitByBullet(HitByBulletEvent e) {
+		if(!dodge) {
+			turnLeft(90);
+			ahead(100);
+		}
+		return;
 	}
 
 	public void onHitWall(HitWallEvent e) {

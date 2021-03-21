@@ -31,6 +31,7 @@ List pesquisa_lista (List lista, ITEM_TYPE it) {
 }
 
 int lista_vazia(List lista) {
+    //if NULL then 1 else 0
     return (lista->next == NULL ? 1 : 0);
 }
 

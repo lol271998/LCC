@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 int f(char* content) {
-	char str[8];
+	char* str = malloc(sizeof(content));
 	int result = 2;
 	
 	(void)strcpy(str, content);
