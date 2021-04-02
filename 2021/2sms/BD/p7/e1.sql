@@ -1,0 +1,114 @@
+//1
+SELECT Name
+FROM 
+	CUSTOMER LEFT JOIN STREAM USING(CustomerId)
+WHERE
+	StreamId IS NULL
+AND
+	Country = 'China'
+;
+
+//2
+
+SELECT Country, COUNT(CustomerId)
+FROM
+	STREAM RIGHT JOIN CUSTOMER USING(CustomerId)
+WHERE
+	StreamId is NULL
+GROUP BY Country;
+
+//2a
+
+SELECT Country, COUNT(CustomerId)
+FROM
+	CUSTOMER LEFT JOIN STREAM
+USING(CustomerId)
+WHERE
+	StreamId IS NULL
+GROUP BY Country
+;
+
+//3a
+
+SELECT Title, COUNT(StreamId) AS N
+FROM 
+	MOVIE LEFT JOIN STREAM USING (MovieId)
+WHERE 
+	Year = 2015
+GROUP BY Title
+HAVING N<=5
+;
+
+//5
+DELETE FROM STREAM
+WHERE
+	Charge <= 5.5
+AND
+	CustomerID IN
+	(
+		SELECT CustomerId
+		FROM CUSTOMER
+		WHERE Country = 'China'
+	)
+;
+
+ver quantas streams foram afetadas
+SELECT *
+FROM STREAM NATURAL JOIN CUSTOMER
+WHERE Charge <= 5.5 AND Country = 'China';
+
+DELETE FROM MOVIE_ACTOR
+WHERE
+	ActorId = (SELECT ActorId FROM ActorId
+			   WHERE Name = 'Tom Cruise')
+AND
+	MovieId IN (SELECT MovieId
+				FROM MOVIE_GENRE NATURAL JOIN GENRE
+				WHERE Label = 'Action')
+;
+
+//6
+SELECT MovieId, Title, Label
+
+//9
+SELECT Name, COUNT(*) AS N
+FROM MOVIE
+NATURAL JOIN MOVIE_ACTOR
+NATURAL JOIN ACTOR 
+GROUP BY Name
+HAVING N >= 15
+ORDER BY N DESC, Name
+;
+
+//10
+SELECT Title
+FROM MOVIE
+NATURAL JOIN MOVIE_ACTOR
+NATURAL JOIN ACTOR
+WHERE Name = 'Johnny Depp'
+;
+
+SELECT Title,A1.Name, A2.Name
+FROM
+	(MOVIE_ACTOR MA1
+ 	 NATURAL JOIN ACTOR A1)
+JOIN
+	(MOVIE ACTOR MA2
+	 NATURAL JOIN ACTOR A2)
+USING(MovieId) 
+WHERE A1.Name = 'Johnny Depp'
+AND   A2.Name <> 'Johnny Depp'
+;
+
+SELECT Title, A2.Name
+FROM
+	(MOVIE_ACTOR MA1
+	 NATURAL JOIN ACTOR A1)
+JOIN
+	MOVIE_ACTOR MA2
+	NATURAL JOIN ACTOR A2)
+USING(MovieId)
+NATURAL JOIN MOVIE
+WHERE A1.Name = 'Johnny Depp'
+AND   A2.Name <> 'Johnny Depp'
+ORDER BY Title, A2.Name;
