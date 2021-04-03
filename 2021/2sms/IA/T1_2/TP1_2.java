@@ -161,7 +161,7 @@ public class TP1_2 {
 		d3 = dir(n3,n4,n1);
 		d4 = dir(n3,n4,n2);
 
-		
+		/*
 		System.out.println(n1+" "+n2+" "+n3+" "+n4);
 
 		System.out.println("d1: "+d1+",d2: "+d2+",d3: "+d3+",d4: "+d4);
@@ -169,7 +169,7 @@ public class TP1_2 {
 		System.out.println("onSeg(n3,n4,n2): "+onSeg(n3,n4,n2));
 		System.out.println("onSeg(n1,n2,n3): "+onSeg(n1,n2,n3));
 		System.out.println("onSeg(n1,n2,n4): "+onSeg(n1,n2,n4));
-		
+		*/
 
 		if((d1 < 0 || d2 < 0) && (d3 < 0 || d4 < 0)) return true;
 		else if(d1 == 0 && onSeg(n1,n2,n3)) return true;
@@ -189,7 +189,7 @@ public class TP1_2 {
 				b = poligono.get(0);
 			}
 			else b = poligono.get(i+1);
-			System.out.println(a+" "+b);
+			//System.out.println(a+" "+b);
 			Edge e = new Edge(a,b,0);
 
 			LinkedList<Edge> lEdge = new LinkedList<Edge>();
@@ -316,7 +316,6 @@ public class TP1_2 {
 				
 				//System.out.println("perimeter" +perimeter(poligono));
 				crossesWithFirst.clear();
-				print(n);
 				findIntersection();
 				//verify if we have a poligono without intersections and stop
 				count=0; //if count=n no intersections
@@ -526,14 +525,10 @@ public class TP1_2 {
                 if (currentEnergy < best) {
                     best = currentEnergy;
                 }
-    		}
-
-              
-                // Cool system
-                temp *= 1-coolingRate; 
-
-    		}
-		
+    		} 
+        	// Cool system
+        	temp *= 1-coolingRate; 
+    	}
 	}
 
 	//For testing purposes
@@ -567,28 +562,11 @@ public class TP1_2 {
 		n = in.nextInt();
 		m = in.nextInt();
 		nodeArray = new Node[n];
-		Node n1 = new Node (2,0);//a
-        nodeArray[0] = n1;
-        Node n2 = new Node (-6,0);//b
-        nodeArray[1] = n2;
-        Node n3 = new Node (6,6); //c
-        nodeArray[2] = n3;
-        Node n4 = new Node (10,0); //d
-        nodeArray[3] = n4;
-        Node n5 = new Node (6,-6); //E
-        nodeArray[4] = n5;
-        Node n6 = new Node (-4,4); //F
-        nodeArray[5] = n6;
-        Node n7 = new Node (0,8); //g
-        nodeArray[6] = n7;
-        Node n8 = new Node (-2,-2); //h
-        nodeArray[7] = n8;
 
+		generate(n,m);
 		permutation(n);
-		findIntersection();
-		printIntersection();
 		BIF(n);
-		printIntersection();
+		//printIntersection();
 
 
 		/*
