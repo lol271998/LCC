@@ -15,6 +15,10 @@ class Node {
 
 	}
 
+	public boolean isEqual(Node n) {
+		if(this.x == n.x && this.y == n.y) return true;
+		else return false;
+	}
 	public String toString() {
 		return "("+this.x+","+this.y+")";
 	}
@@ -52,8 +56,8 @@ public class TP1_2 {
 					
 		for(int i=0;i<n;i++) {
 			
-			int x = new Random().nextInt(m +m) -m ;
-			int y = new Random().nextInt(m+m ) -m ;
+			int x = new Random().nextInt(m+m) -m ;
+			int y = new Random().nextInt(m+m) -m ;
 			Node no = new Node(x,y);
 			//if already exists
 			if(map.containsKey(no)) i--;
@@ -116,7 +120,7 @@ public class TP1_2 {
 	//End 2 b)
 
 	//3
-	
+
 	static boolean onSeg(Node n1, Node n2, Node i) {
 	
 		return (((Math.min(n1.x,n2.x) <= i.x) && (Math.max(n1.x,n2.x) >= i.x)) 
@@ -138,16 +142,13 @@ public class TP1_2 {
 		return ((n3.x-n1.x)*(n2.y-n1.y)) - ((n2.x-n1.x)*(n3.y-n1.y));
 	}
 
-	static boolean isCollinear(Node n1, Node n2, Node n3, Node n4) {
+	static boolean isCollinear(Node n1, Node n2, Node n3) {
 
 		int d1,d2,d3,d4;
 
 		d1 = dir(n1,n2,n3);
-		d2 = dir(n1,n2,n4);
-		d3 = dir(n3,n4,n1);
-		d4 = dir(n3,n4,n2);
-		//System.out.println()
-		if(d1 == d2 && d2 == d3 && d3 == d4 && d4 == 0 && dotProduct(n1,n2,n3,n4)<0) return true;
+		//System.out.println("d1: "+d1+" dotProduct: "+dotProduct(n1,n2,n2,n3));
+		if(d1 == 0 && dotProduct(n1,n2,n2,n3)<0) return true;
 		else return false;
 
 	}
@@ -156,22 +157,24 @@ public class TP1_2 {
 
 		int d1,d2,d3,d4;
 
-		d1 = dir(n1,n2,n3);
-		d2 = dir(n1,n2,n4);
-		d3 = dir(n3,n4,n1);
-		d4 = dir(n3,n4,n2);
+		d1 = dir(n1,n2,n3); //d3
+		d2 = dir(n1,n2,n4); //d4
+		d3 = dir(n3,n4,n1); //d1
+		d4 = dir(n3,n4,n2); //d2
 
+
+		/*
+		System.out.println(n3+" "+n4);
 		
-		System.out.println(n1+" "+n2+" "+n3+" "+n4);
-
 		System.out.println("d1: "+d1+",d2: "+d2+",d3: "+d3+",d4: "+d4);
 		System.out.println("onSeg(n3,n4,n1): "+onSeg(n1,n2,n3));
 		System.out.println("onSeg(n3,n4,n2): "+onSeg(n3,n4,n2));
 		System.out.println("onSeg(n1,n2,n3): "+onSeg(n1,n2,n3));
 		System.out.println("onSeg(n1,n2,n4): "+onSeg(n1,n2,n4));
-		
+		*/
 
-		if((d1 < 0 || d2 < 0) && (d3 < 0 || d4 < 0)) return true;
+		if (((d3>0 && d4<0) || (d3<0 && d4>0)) 
+	     && ((d1>0 && d2<0) || (d1<0 && d2>0))) return true;
 		else if(d1 == 0 && onSeg(n1,n2,n3)) return true;
 		else if(d2 == 0 && onSeg(n1,n2,n4)) return true;
 		else if(d3 == 0 && onSeg(n3,n4,n1)) return true;
@@ -184,36 +187,49 @@ public class TP1_2 {
 	static void findIntersection() {
 		for(int i = 0; i<poligono.size(); i++) {
 			Node a,b;
+			int pos = 0;
 			a = poligono.get(i);
 			if(i == poligono.size()-1) {
 				b = poligono.get(0);
 			}
-			else b = poligono.get(i+1);
-			System.out.println(a+" "+b);
+			else{
+				pos = i+1;
+				b = poligono.get(i+1);
+			}
+			//System.out.println("Comparar"+a+" "+b+ " com: ");
+			
 			Edge e = new Edge(a,b,0);
-
 			LinkedList<Edge> lEdge = new LinkedList<Edge>();
 			lEdge.add(e);
 
-			for(int j = i+1; j<poligono.size(); j++) {
+			for(int j = 0; j<poligono.size(); j++) {
+				int flag = 0;
 				Node p,q;
-				int x = 0;
-				p = poligono.get(j);
 
-				//Liga com o primeiro
-				if(j == poligono.size()-1) {
-					x = 1;
-					q = poligono.get(0);
-				}
+				p = poligono.get(j);
+				if(j == poligono.size()-1) q = poligono.get(0);
 				else q = poligono.get(j+1);
 
 				Edge f = new Edge(p,q,0);
-				//Ver se são colineares
-				if((j == i+1 && isCollinear(a,b,p,q))) {
-					lEdge.add(f);
-				}
-				else if(j != i+1 && intersect(a,b,p,q) && x != 1) {
-					lEdge.add(f);
+				//System.out.println(p+" "+q);
+				if((!a.isEqual(p)) && (!b.isEqual(q))) {
+					//(ax,ay)-(bx,by) <-> (px,py)-(qx,qy)
+					
+					//Se for aresta anterior
+					if(a.isEqual(q) && isCollinear(q,a,b)) {
+						lEdge.add(f);
+					}
+
+					//Se for aresta seguinte
+					else if(b.isEqual(p) && isCollinear(a,b,p)) {
+						lEdge.add(f);
+					}
+					
+					else if(!a.isEqual(q) && !b.isEqual(p)){
+						if(intersect(a,b,p,q)){
+							lEdge.add(f);
+						}
+					}
 				}
 			}
 			crossesWithFirst.add(lEdge);
@@ -237,7 +253,7 @@ public class TP1_2 {
 		if(ind1 == poligono.size()-1) ind1 = 0;
 
 
-		if(isCollinear(a.n1,a.n2,b.n1,b.n2)) {
+		if(isCollinear(a.n1,a.n2,b.n1)) {
 
 			Node n5 = poligono.get(ind4+1);
 			poligono.remove(ind4);
@@ -245,8 +261,10 @@ public class TP1_2 {
 
 		}
 		else{
-			poligono.remove(ind3);
-			poligono.add(ind1+1,b.n1);
+			poligono.add(ind2,b.n1);
+            poligono.remove(ind2 +1);
+            poligono.add(ind3,a.n2);
+            poligono.remove(ind3+1);
 		}
 	}	
 
@@ -316,7 +334,7 @@ public class TP1_2 {
 				
 				//System.out.println("perimeter" +perimeter(poligono));
 				crossesWithFirst.clear();
-				print(n);
+				//print(n);
 				findIntersection();
 				//verify if we have a poligono without intersections and stop
 				count=0; //if count=n no intersections
@@ -345,31 +363,25 @@ public class TP1_2 {
 		//System.out.println(count+":"+n);
 		if(count == n) return;
 		
-		while(count>n) {
-			
+		while(count>n) {	
 			for(int i = 0; i <crossesWithFirst.size(); i++) {
 				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
 				a = crossedEdgesList.getFirst();
-
-				//for each crossed edge with (a.n1,a.n1)
-				for(int j = 1; j < crossedEdgesList.size(); j++) {
-					b = crossedEdgesList.get(j);
+				if(crossedEdgesList.size() > 1) {
+					b = crossedEdgesList.get(1);
 					exchange(a,b);
+					crossesWithFirst.clear();
+					findIntersection();
+					i = 0;
 				}
-
-				crossesWithFirst.clear();
-				findIntersection();
-				count=0; //if count=n no intersections
-				for(int k=0;k<crossesWithFirst.size();k++) 
-					count += crossesWithFirst.get(k).size();
-				if(count == n)
-					return;
 			}
-			if(n == 4) return;
-			n++;
+			count=0; //if count=n no intersections
+			for(int k=0;k<crossesWithFirst.size();k++) 
+				count += crossesWithFirst.get(k).size();
+			if(count == n)	return;
 		}
 	}
-
+	
 	//alinea 4c
 	static void lessIntersections(int n) {
 		Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge  
@@ -379,28 +391,28 @@ public class TP1_2 {
 		int h = 0;
 		for(int i = 0; i < crossesWithFirst.size(); i++) 
 			count += crossesWithFirst.get(i).size();
-		//System.out.println(count+":"+n);
 		if(count == n) return;
 		while(count>n) {
-			int min = Integer.MAX_VALUE;
-			for(int i = 0; i < crossesWithFirst.size(); i++) {
-				if(min>crossesWithFirst.get(i).size() && crossesWithFirst.get(i).size() > 1) min = crossesWithFirst.get(i).size();
-			}
 
 			for(int i = 0; i < crossesWithFirst.size(); i++) {
 				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
 				a = crossedEdgesList.getFirst();
-
+				int min = Integer.MAX_VALUE;
+				for(int j = 0; j < crossesWithFirst.size(); j++) {
+					if(min>crossesWithFirst.get(i).size() && crossesWithFirst.get(j).size() > 1) min = crossesWithFirst.get(j).size();
+				}
 				if(min == crossedEdgesList.size()) {
-					for(int j = 1; j < crossedEdgesList.size(); j++) {
-						b = crossedEdgesList.get(j);
-						exchange(a,b);
-					}
+					b = crossedEdgesList.get(1);
+					exchange(a,b);
+					crossesWithFirst.clear();
+					findIntersection();
+					i = 0;
+				}
+
+				for(int j = 0; j < crossesWithFirst.size(); j++) {
+					if(min>crossesWithFirst.get(i).size() && crossesWithFirst.get(i).size() > 1) min = crossesWithFirst.get(j).size();
 				}
 			}
-
-			crossesWithFirst.clear();
-			findIntersection();
 			count=0; //if count=n no intersections
 			for(int k = 0; k<crossesWithFirst.size(); k++) 
 				count += crossesWithFirst.get(k).size();
@@ -438,18 +450,20 @@ public class TP1_2 {
 		if(ind4 == poligono2.size()-1) ind4 = 0;
 		if(ind1 == poligono2.size()-1) ind1 = 0;
 
-		if(isCollinear(a.n1,a.n2,b.n1,b.n2)) {
 
-			Node n5 = poligono.get(ind4+1);
-			poligono.remove(ind4);
-			poligono.add(ind1+1,b.n2);
+		if(isCollinear(a.n1,a.n2,b.n1)) {
+
+			Node n5 = poligono2.get(ind4+1);
+			poligono2.remove(ind4);
+			poligono2.add(ind1+1,b.n2);
 
 		}
 		else{
-			poligono.remove(ind3);
-			poligono.add(ind1+1,b.n1);
-		}
-		
+			poligono.add(ind2,b.n1);
+            poligono.remove(ind2 +1);
+            poligono.add(ind3,a.n2);
+            poligono.remove(ind3+1);
+		}		
 	}
 	// Calculate the acceptance probability
 	static double acceptanceProbability(double energy, double newEnergy, double temperature) {
@@ -567,32 +581,29 @@ public class TP1_2 {
 		n = in.nextInt();
 		m = in.nextInt();
 		nodeArray = new Node[n];
-		Node n1 = new Node (2,0);//a
-        nodeArray[0] = n1;
-        Node n2 = new Node (-6,0);//b
-        nodeArray[1] = n2;
-        Node n3 = new Node (6,6); //c
-        nodeArray[2] = n3;
-        Node n4 = new Node (10,0); //d
-        nodeArray[3] = n4;
-        Node n5 = new Node (6,-6); //E
-        nodeArray[4] = n5;
-        Node n6 = new Node (-4,4); //F
-        nodeArray[5] = n6;
-        Node n7 = new Node (0,8); //g
-        nodeArray[6] = n7;
-        Node n8 = new Node (-2,-2); //h
-        nodeArray[7] = n8;
-
-		permutation(n);
-		findIntersection();
-		printIntersection();
-		BIF(n);
-		printIntersection();
-
-
+		
 		/*
-		//PARA TESTAR
+		Node n0 = new Node(1,4);
+		nodeArray[0] = n0;
+		Node n1 = new Node(9,4);
+		nodeArray[1] = n1;
+		Node n2 = new Node(6,4);
+		nodeArray[2] = n2;
+		Node n3 = new Node(2,1);
+		nodeArray[3] = n3;
+		Node n4 = new Node(-1,1);
+		nodeArray[4] = n4;
+		Node n5 = new Node(-2,3);
+		nodeArray[5] = n5;
+		*/
+
+		generate(n,m);
+		permutation(n);
+		//nearest(nodeArray[0],n);
+
+		//findIntersection();
+		//printIntersection();
+
 		JFrame frame = new JFrame( "Drawing Polygons" );
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		PolygonsJPanel polygonsJPanel = new PolygonsJPanel();
@@ -601,16 +612,23 @@ public class TP1_2 {
 		frame.setSize( 280, 270 ); // set frame size
 		frame.setVisible( true ); // display frame
 
-		if(in.next().equals("")) frame.setVisible( false );
+		if(in.next().equals("next")) frame.setVisible( false );
 
-		
+		//printIntersection();
+		//BIF(n);
+		//fistImprovement(n);
+		lessIntersections(n);
+		//randomNeighbor(n);
+		//SA(n);
 
-		SA(n);
+		//SA(n);
 
 		polygonsJPanel.set(n,m,poligono);
 		frame.add( polygonsJPanel ); // add polygonsJPanel to frame
 		frame.setSize( 280, 270 ); // set frame size
-		frame.setVisible( true ); // display frame	
-		*/
+		frame.setVisible( true ); // display frame
+		
+		
+		
 	}
 }

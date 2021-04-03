@@ -21,12 +21,12 @@ public class PolygonsJPanel extends JPanel {
         int y1Points[] = new int[n+1];
 
         for(int i = 0; i<l.size(); i++) {
-            x1Points[i] = (l.get(i).x) *100;
-            y1Points[i] = (l.get(i).y) *100;
+            x1Points[i] = (l.get(i).x+m)*10;
+            y1Points[i] = (l.get(i).y+m)*10;
         }
-        x1Points[n-1] = l.getFirst().x;
-        y1Points[n-1] = l.getFirst().y;
-        g.drawPolyline( x1Points, y1Points, n ); 
+        x1Points[n] = (l.getFirst().x+m)*10;
+        y1Points[n] = (l.getFirst().y+m)*10;
+        g.drawPolyline( x1Points, y1Points, n+1 );
 
     } // end method paintComponent
 } // end class PolygonsJPanel
