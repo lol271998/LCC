@@ -1,0 +1,73 @@
+/*
+MODELO ER
+*/
+
+WORKER (
+	_id_,
+	email,
+	Nome,
+	DataNasc,
+	. Idade .,
+	Sexo,
+	{Habilitação(Grau?,Instituição?,Ano?)},
+	Morada(Rua, Num, Andar?,Cidade),
+	NumTele,
+    Supervisor?,
+    Salário,
+    IdDep
+)
+
+SALES (
+	_id_,
+	email,
+	Nome,
+	DataNasc,
+	. Idade .,
+	Sexo,
+	{Habilitação(Grau?,Instituição?,Ano?)},
+	Morada(Rua,Num,Andar?,Cidade),
+	NumTele,
+	Salário,
+	Vendas,
+	Bónus
+)
+
+/*
+Secretaria,
+Gerente,
+RecursosHumanos,
+Contabilidade
+*/
+
+DEPARTAMENTO (
+	_IdDep_,
+	Sala
+)
+FORNECEDOR(
+	_Nome_,
+	Morada(Rua,Num,Andar?,Cidade)
+)
+
+ARMAZEM (
+    _Nome_,
+    Morada(Rua,Num,Andar?,Cidade),
+    Gerente
+)
+
+CLIENTE (
+	_email_,
+	NomeCliente,
+	NomeEmpresa,
+	Morada(Rua,Num,Andar?,Cidade),
+	DataInicio,
+	NumTele
+)
+
+
+WORKER === N === <TRABALHA_PARA> === 1 === DEPARTAMENTO
+WORKER --- 1 ----<DIRIGE> === 1 === DEPARTAMENTO
+WORKER --- 1 --- <SUPERVISIONA> --- N --- WORKER
+WORKER === 1 === <GERE> === 1 === ARMAZEM
+SALES --- 1 ---- <LIDA> === N === CLIENTE
+FORNECEDOR === M === <FORNECE> === N === ARMAZEM
+ARMAZEM === M === <ENTREGA> === N === CLIENTE

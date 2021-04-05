@@ -1,0 +1,76 @@
+/*
+MODELO RELACIONAL
+*/
+
+table WORKER (
+	_Id_,
+	Email,
+	Nome,
+	DataNasc,
+	Sexo,
+	Rua, Num, Andar?,Cidade,
+	NumTele,
+	Supervisor? --> WORKER.Id,
+	//WORKER --- 1 --- <SUPERVISIONA> --- N --- WORKER
+	Salário,
+	IdDep --> DEPARTAMENTO.IdDep
+	//WORKER === 1 === <TRABALHA_PARA> === N === DEPARTAMENTO
+)
+
+table HABILITAÇÕES (
+	_Worker_ --> WORKER.Id,
+	_Sales_ --> SALES.Id,
+	_Grau_,
+	_Instituição_,
+	_Ano_
+)
+
+table SALES (
+	_Id_ --> CLIENTE.email,
+	Email,
+	Nome,
+	Sexo,
+	DataNasc,
+	Rua, Num, Andar?, Cidade,
+	NumTele,
+	Salário,
+	Vendas,
+	Bónus
+)
+
+table DEPARTAMENTO (
+	_IdDep_ --> WORKER.Id,
+	//WORKER --- 1 ----<DIRIGE> === 1 === DEPARTAMENTO
+	Sala
+)
+
+table FORNECEDOR(
+	_Nome_,
+	Rua, Num, Andar?,Cidade
+)
+
+table ARMAZEM (
+	_Nome_,
+	_Gerente_ -->WORKER.Id,
+	//WORKER === 1 === <GERE> === 1 === ARMAZEM
+	Rua, Num, Andar?, Cidade
+)
+
+table CLIENTE (
+	_email_,
+	NomeCliente,
+	NomeEmpresa,
+	Rua, Num, Andar?,Cidade,
+	DataInicio,
+	NumTele
+)
+
+table ENTREGA (
+	_armazem_ --> ARMAZEM.Nome,
+	_cliente_ --> CLIENTE.email
+)
+
+table FORNECE (
+	_fornecedor_ --> FORNECEDOR.Nome,
+	_armazem_ --> ARMAZEM.Nome
+)
