@@ -155,12 +155,13 @@ public class TP1_2 {
 
 		int d1,d2,d3,d4;
 
-		d1 = dir(n1,n2,n3); //d3
-		d2 = dir(n1,n2,n4); //d4
-		d3 = dir(n3,n4,n1); //d1
-		d4 = dir(n3,n4,n2); //d2
+		d1 = dir(n1,n2,n3); 
+		d2 = dir(n1,n2,n4); 
+		d3 = dir(n3,n4,n1); 
+		d4 = dir(n3,n4,n2); 
 
 		/*
+		//Debugging
 		System.out.println(n3+" "+n4);
 
 		System.out.println("d1: "+d1+",d2: "+d2+",d3: "+d3+",d4: "+d4);
@@ -191,6 +192,7 @@ public class TP1_2 {
 			else{
 				b = poligono.get(i+1);
 			}
+
 			//System.out.println("Comparar"+a+" "+b+ " com: ");
 
 			Edge e = new Edge(a,b,0);
@@ -207,7 +209,6 @@ public class TP1_2 {
 				Edge f = new Edge(p,q,0);
 				//System.out.println(p+" "+q);
 				if((!a.isEqual(p)) && (!b.isEqual(q))) {
-					//(ax,ay)-(bx,by) <-> (px,py)-(qx,qy)
 
 					//Se for aresta anterior
 					if(a.isEqual(q) && isCollinear(q,a,b)) {
@@ -243,6 +244,7 @@ public class TP1_2 {
 
 		}
 
+		//Caso seja a ultima aresta
 		if(ind4 == poligono.size()-1) ind4 = 0;
 		if(ind1 == poligono.size()-1) ind1 = 0;
 
@@ -330,10 +332,7 @@ public class TP1_2 {
 				findIntersection();
 				//verify if we have a poligono without intersections and stop
 				count=0; //if count=n no intersections
-				/*
-				counter++;
-				if(counter == 5) return;
-				 */
+
 				for(int k=0;k<crossesWithFirst.size();k++) 
 					count += crossesWithFirst.get(k).size();
 				if(count == n)
@@ -351,7 +350,7 @@ public class TP1_2 {
 		int count = 0; //if count = n no intersections
 		for(int i = 0; i < crossesWithFirst.size(); i++) 
 			count += crossesWithFirst.get(i).size();
-		//System.out.println(count+":"+n);
+
 		if(count == n) return;
 
 		while(count>n) {	
@@ -409,7 +408,7 @@ public class TP1_2 {
 
 	//alinea 4d
 	static void randomNeighbor(int n) {
-		//Collections.shuffle(crossesWithFirst.get(i)); 
+
 		Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge  
 		findIntersection();
 
@@ -427,7 +426,6 @@ public class TP1_2 {
 				int size=crossedEdgesList.size();
 				if(size > 1) {
 					random=  new Random().nextInt(size - 1) + 1 ;
-					//int x = new Random().nextInt(m +m) -m ;
 					b = crossedEdgesList.get(random) ;
 					exchange(a,b);
 					crossesWithFirst.clear();
