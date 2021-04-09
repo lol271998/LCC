@@ -1,1 +1,1 @@
-p6_02.sql
+SELECT Name,City,Country FROM CUSTOMER WHERE Name LIKE 'Ch%';

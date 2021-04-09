@@ -18,7 +18,6 @@ table WORKER (
 )
 
 table HABILITAÇÕES (
-	_Worker_ --> WORKER.Id,
 	_Sales_ --> SALES.Id,
 	_Grau_,
 	_Instituição_,
@@ -26,7 +25,8 @@ table HABILITAÇÕES (
 )
 
 table SALES (
-	_Id_ --> CLIENTE.email,
+	_Id_,
+	emailcliente? --> CLIENTE.email, 
 	Email,
 	Nome,
 	Sexo,
@@ -59,7 +59,7 @@ table ARMAZEM (
 table CLIENTE (
 	_email_,
 	NomeCliente,
-	NomeEmpresa,
+	NomeEmpresa?,
 	Rua, Num, Andar?,Cidade,
 	DataInicio,
 	NumTele

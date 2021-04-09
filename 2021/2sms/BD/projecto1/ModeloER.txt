@@ -2,20 +2,6 @@
 MODELO ER
 */
 
-WORKER (
-	_id_,
-	email,
-	Nome,
-	DataNasc,
-	. Idade .,
-	Sexo,
-	{Habilitação(Grau?,Instituição?,Ano?)},
-	Morada(Rua, Num, Andar?,Cidade),
-	NumTele,
-    Supervisor?,
-    Salário,
-    IdDep
-)
 
 SALES (
 	_id_,
@@ -30,6 +16,20 @@ SALES (
 	Salário,
 	Vendas,
 	Bónus
+)
+
+WORKER (
+	_id_,
+	email,
+	Nome,
+	DataNasc,
+	. Idade .,
+	Sexo,
+	Morada(Rua, Num, Andar?,Cidade),
+	NumTele,
+    Supervisor?,
+    Salário,
+    IdDep
 )
 
 /*
@@ -57,7 +57,7 @@ ARMAZEM (
 CLIENTE (
 	_email_,
 	NomeCliente,
-	NomeEmpresa,
+	NomeEmpresa?,
 	Morada(Rua,Num,Andar?,Cidade),
 	DataInicio,
 	NumTele

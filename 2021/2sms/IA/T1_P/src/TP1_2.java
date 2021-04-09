@@ -46,9 +46,10 @@ public class TP1_2 {
 
 	static HashMap<Node, Boolean> map = new HashMap<>();
 	static LinkedList<Node> poligono = new LinkedList<Node>();
+	static LinkedList<Node> poligonoteste = new LinkedList<Node>();
 	static Node[] nodeArray; // use order in permutation method
 	static ArrayList<LinkedList<Edge>> crossesWithFirst = new ArrayList<LinkedList<Edge>>(); //each list has list of intersected edges
-
+	static int ite;
 
 	//1 
 	static void generate(int n , int m) {
@@ -65,6 +66,8 @@ public class TP1_2 {
 				//map[x][y]=1;	
 				map.put(no, false);
 				nodeArray[i] = no;
+				System.out.println("Node n"+i+" = new Node("+no.x+","+no.y+");");
+				System.out.println("nodeArray["+i+"] = n"+i+";");
 			}
 		}
 	}
@@ -244,7 +247,6 @@ public class TP1_2 {
 
 		}
 
-		//Caso seja a ultima aresta
 		if(ind4 == poligono.size()-1) ind4 = 0;
 		if(ind1 == poligono.size()-1) ind1 = 0;
 
@@ -261,13 +263,45 @@ public class TP1_2 {
 			poligono.add(ind3,a.n2);
 			poligono.remove(ind3+1);
 		}
-	}	
+	}
+	
+	static void exchangeForTest(Edge a, Edge b) {
+
+		int ind1=0,ind2=0,ind3=0,ind4=0;
+		int i = 0;
+		for(i = 0;i<poligonoteste.size();i++) {
+			Node aux = poligonoteste.get(i);
+			if (aux.x == a.n1.x && aux.y == a.n1.y) {ind1=i;}
+			if (aux.x == a.n2.x && aux.y == a.n2.y) {ind2=i;}
+			if (aux.x == b.n1.x && aux.y == b.n1.y) {ind3=i;}
+			if (aux.x == b.n2.x && aux.y == b.n2.y) {ind4=i;}
+
+		}
+
+		if(ind4 == poligonoteste.size()-1) ind4 = 0;
+		if(ind1 == poligonoteste.size()-1) ind1 = 0;
+
+
+		if(isCollinear(a.n1,a.n2,b.n1)) {
+
+			poligonoteste.remove(ind4);
+			poligonoteste.add(ind1+1,b.n2);
+
+		}
+		else{
+			poligonoteste.add(ind2,b.n1);
+			poligonoteste.remove(ind2 +1);
+			poligonoteste.add(ind3,a.n2);
+			poligonoteste.remove(ind3+1);
+		}		
+	}
 
 	//End 3
 
 	//4
 
 	// a)HILL CLIMBING
+	
 	// best improvement first
 
 	// calc the size of an edge
@@ -298,54 +332,71 @@ public class TP1_2 {
 	}
 
 	static void BIF(int n) {
-
+		poligonoteste.clear();
 		Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge  
 		findIntersection();
+		double best = Integer.MAX_VALUE;
+		double best_temp = Integer.MAX_VALUE;
+		int indexb = 0;
+		
 		//verify if we have a poligono without intersections and stop
 		int count = 0; //if count=n no intersections
 		for(int i = 0; i<crossesWithFirst.size(); i++) 
 			count += crossesWithFirst.get(i).size();
-		if(count == n) 
+		if(count == n)
 			return;
-		while(count>n) {
-			for(int i=0;i<crossesWithFirst.size();i++) {
+		
+		while(true) {
+			//Configuração inicial ver qual dos candidatos causa menor perimetro
+			for(int i=0; i<crossesWithFirst.size(); i++) {
 				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
-				TreeSet<Edge> crossedEdgesOrder = new TreeSet<>(); //ordem ascendente
+				//poligonoteste has a copy of poligono by creating new nodes
+				Node copy;  	
+				for(int l = 0; l < poligono.size() ; l++) {
+					copy = new Node(poligono.get(l).x, poligono.get(l).y);
+					poligonoteste.add(copy);
+				}
+			
 				a = crossedEdgesList.getFirst();
-
-				//for each crossed edge with (a.n1,a.n1)
-				for(int j = 1; j<crossedEdgesList.size(); j++) {
-					b = crossedEdgesList.get(j);
-					double edge1 = calcEdges(a.n1,b.n1);
-					double edge2 = calcEdges(a.n2,b.n2);
-					Edge aux = new Edge(b.n1, b.n2, (edge1 + edge2));
-					crossedEdgesOrder.add(aux);
+				if(crossedEdgesList.size()>1) {
+					b = crossedEdgesList.get(1);
+					exchangeForTest(a,b);
+					i = 0;
+					crossesWithFirst.clear();
+					findIntersection();
 				}
-				if( crossedEdgesOrder.size()>0) {
-					Edge best = crossedEdgesOrder.first();
-					exchange(a, best);
+				
+				double p = perimeter(poligonoteste);
+				poligonoteste.clear();
+				
+				if(best_temp>p){
+					best_temp = p;
+					indexb = i;
 				}
-
-
-				//System.out.println("perimeter" +perimeter(poligono));
-				crossesWithFirst.clear();
-				findIntersection();
-				//verify if we have a poligono without intersections and stop
-				count=0; //if count=n no intersections
-
-				for(int k=0;k<crossesWithFirst.size();k++) 
-					count += crossesWithFirst.get(k).size();
-				if(count == n)
-					return;
 			}
+			if(best>best_temp) {
+				System.out.println("best_temp>best");
+				best = best_temp;
+				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(indexb);
+				a = crossedEdgesList.getFirst();
+				for(int k = 1; k<crossedEdgesList.size(); k++) {
+					b = crossedEdgesList.get(k);
+					exchange(a,b);
+				}
+				best_temp = Integer.MAX_VALUE;
+			}	
+			//Se não consegue melhorar mais
+			else return;
+			crossesWithFirst.clear();
+			findIntersection();
 		}
 	}
-
 
 	//alinea 4b first improvement
 	static void fistImprovement(int n) {
 		Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge  
 		findIntersection();
+		
 		//verify if we have a poligono without intersections and stop
 		int count = 0; //if count = n no intersections
 		for(int i = 0; i < crossesWithFirst.size(); i++) 
@@ -353,24 +404,19 @@ public class TP1_2 {
 
 		if(count == n) return;
 
-		while(count>n) {	
-			for(int i = 0; i <crossesWithFirst.size(); i++) {
-				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
-				a = crossedEdgesList.getFirst();
-				if(crossedEdgesList.size() > 1) {
-					b = crossedEdgesList.get(1);
-					exchange(a,b);
-					crossesWithFirst.clear();
-					findIntersection();
-					i = 0;
-				}
+		for(int i = 0; i <crossesWithFirst.size(); i++) {
+			LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
+			a = crossedEdgesList.getFirst();
+			//Escolher o primeiro candidato para descruzar
+			for(int k = 1; k<crossedEdgesList.size(); k++) {
+				b = crossedEdgesList.get(k);
+				exchange(a,b);
 			}
-			count=0; //if count=n no intersections
-			for(int k=0;k<crossesWithFirst.size();k++) 
-				count += crossesWithFirst.get(k).size();
-			if(count == n)	return;
+			crossesWithFirst.clear();
+			findIntersection();
 		}
 	}
+
 
 	//alinea 4c
 	static void lessIntersections(int n) {
@@ -378,31 +424,58 @@ public class TP1_2 {
 		findIntersection();
 		//verify if we have a poligono without intersections and stop
 		int count = 0; //if count = n no intersections
+		
 		for(int i = 0; i < crossesWithFirst.size(); i++) 
 			count += crossesWithFirst.get(i).size();
 		if(count == n) return;
-		while(count>n) {
+		
+		int bestmin = Integer.MAX_VALUE;
+		for(int i = 0; i < crossesWithFirst.size(); i++) {
+			LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
+			a = crossedEdgesList.getFirst();
+			for(int j = 0; j < crossesWithFirst.size(); j++) {
+				if(bestmin>crossesWithFirst.get(j).size() && crossesWithFirst.get(j).size() > 1)
+					bestmin = crossesWithFirst.get(j).size();
+			}
+		}
+		
+		for(int i = 0; i< crossesWithFirst.size(); i++) {
+			LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
+			a = crossedEdgesList.getFirst();
+			if(bestmin == crossedEdgesList.size()) {
+				for(int k = 1; k<crossedEdgesList.size(); k++) {
+					b = crossedEdgesList.get(k);
+					exchange(a,b);
+				}
+			}
+		}
+		
+		while(true) {
+			int min = Integer.MAX_VALUE;
 			for(int i = 0; i < crossesWithFirst.size(); i++) {
 				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
 				a = crossedEdgesList.getFirst();
-				int min = Integer.MAX_VALUE;
 				for(int j = 0; j < crossesWithFirst.size(); j++) {
 					if(min>crossesWithFirst.get(j).size() && crossesWithFirst.get(j).size() > 1)
 						min = crossesWithFirst.get(j).size();
 				}
-				if(min == crossedEdgesList.size()) {
-					b = crossedEdgesList.get(1);
-					exchange(a,b);
-					crossesWithFirst.clear();
-					findIntersection();
-					i = 0;
-				}
-				count=0; //if count=n no intersections
-				for(int k = 0; k<crossesWithFirst.size(); k++) 
-					count += crossesWithFirst.get(k).size();
-				if(count == n)
-					return;
 			}
+			if(bestmin>min) {
+				for(int i = 0; i< crossesWithFirst.size(); i++) {
+					LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
+					a = crossedEdgesList.getFirst();
+					if(min == crossedEdgesList.size()) {
+						for(int k = 1; k<crossedEdgesList.size(); k++) {
+							b = crossedEdgesList.get(k);
+							exchange(a,b);
+						}
+					}
+				}
+				crossesWithFirst.clear();
+				findIntersection();
+				bestmin = min;
+			}
+			else return;
 		}
 	}
 
@@ -417,64 +490,21 @@ public class TP1_2 {
 			count += crossesWithFirst.get(i).size();
 
 		if(count == n) return;
-
-		while(count>n) {	
-			int random;
-			for(int i = 0; i <crossesWithFirst.size(); i++) {
-				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
-				a = crossedEdgesList.getFirst();
-				int size=crossedEdgesList.size();
-				if(size > 1) {
-					random=  new Random().nextInt(size - 1) + 1 ;
-					b = crossedEdgesList.get(random) ;
-					exchange(a,b);
-					crossesWithFirst.clear();
-					findIntersection();
-					i = 0;
-				}
-			}
-			count=0; //if count=n no intersections
-			for(int k=0;k<crossesWithFirst.size();k++) 
-				count += crossesWithFirst.get(k).size();
-			if(count == n)	return;
+	
+		int random;
+		int size = crossesWithFirst.size();
+		random = new Random().nextInt(size - 1) + 1 ;
+		LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(random);
+		a = crossedEdgesList.getFirst();
+		for(int k = 1; k<crossedEdgesList.size(); k++) {
+			b = crossedEdgesList.get(k);
+			exchange(a,b);
 		}
-
 	}
 
 	//End 4
-
+	
 	//5 -SIMULATED ANNELING
-
-	static void exchangeForSA(Edge a, Edge b, LinkedList<Node> poligono2) {
-
-		int ind1=0,ind2=0,ind3=0,ind4=0;
-		int i = 0;
-		for(i = 0;i<poligono2.size();i++) {
-			Node aux = poligono2.get(i);
-			if (aux.x == a.n1.x && aux.y == a.n1.y) {ind1=i;}
-			if (aux.x == a.n2.x && aux.y == a.n2.y) {ind2=i;}
-			if (aux.x == b.n1.x && aux.y == b.n1.y) {ind3=i;}
-			if (aux.x == b.n2.x && aux.y == b.n2.y) {ind4=i;}
-
-		}
-
-		if(ind4 == poligono2.size()-1) ind4 = 0;
-		if(ind1 == poligono2.size()-1) ind1 = 0;
-
-
-		if(isCollinear(a.n1,a.n2,b.n1)) {
-
-			poligono2.remove(ind4);
-			poligono2.add(ind1+1,b.n2);
-
-		}
-		else{
-			poligono2.add(ind2,b.n1);
-			poligono2.remove(ind2 +1);
-			poligono2.add(ind3,a.n2);
-			poligono2.remove(ind3+1);
-		}		
-	}
 	// Calculate the acceptance probability
 	static double acceptanceProbability(double energy, double newEnergy, double temperature) {
 		// If the new solution is better, accept it
@@ -485,86 +515,107 @@ public class TP1_2 {
 		return Math.exp((energy - newEnergy) / temperature);
 
 	}
-
+	static int find(Edge a) {
+		for(int i = 0; i<crossesWithFirst.size(); i++) {
+			if (crossesWithFirst.get(i).get(0).n1.isEqual(a.n1) 
+			 && crossesWithFirst.get(i).get(0).n2.isEqual(a.n2)) return i; 
+		}
+		return -1;
+	}
+	
 	static void SA(int n) {
 
-		double best=perimeter(poligono); //best perimeter found
+		 //best perimeter found
 		// Set initial temp
-		double temp = 9999;
+		double temp = 100*poligono.size();
 		// Cooling rate
-		double coolingRate = 0.003; 
-		LinkedList<Node> poligono2 = new LinkedList<Node>();
-		//poligono2 has a copy of poligono by creating new nodes
-		Node copy;  	
-		for(int i = 0;i < n ; i++) {
-			copy=new Node(poligono.get(i).x, poligono.get(i).y);
-			poligono2.add(copy);
-
+		double coolingRate = poligono.size()*0.0001; 
+		
+		//Se já for simples
+		findIntersection();
+		int count = 0; //if count = n no intersections
+		for(int i = 0; i < crossesWithFirst.size(); i++) 
+			count += crossesWithFirst.get(i).size();
+		if(count == n) return;
+		
+		int min = Integer.MAX_VALUE;
+		int best = min;
+		
+		//Configuração inicial 
+	
+		Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge 
+		
+		//Calcular todos
+		for(int i = 0; i < crossesWithFirst.size(); i++) {
+			LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(i);
+			a = crossedEdgesList.getFirst();
+			for(int j = 0; j < crossesWithFirst.size(); j++) {
+				if(min>crossesWithFirst.get(j).size() && crossesWithFirst.get(j).size() > 1) {
+					min = crossesWithFirst.get(j).size();
+				}
+			}
 		}
-
-		int found=0; //indice of a crossed edge random
+		
+		best = min;
+		crossesWithFirst.clear();
+		findIntersection();
+				
 		// Loop until system has cooled
 		while (temp > 1) {
-
-			findIntersection();
-			Edge a,b; // (a.n1,a.n2)--->(b.n1,b.n2) edge  
-			int count = 0; //if count = n no intersections
-			for(int i = 0; i < crossesWithFirst.size(); i++) 
-				count += crossesWithFirst.get(i).size();
-
-			if(count == n) return;
-
+			
+			LinkedList<Node> poligonoteste = new LinkedList<Node>();
+			
+			//poligonoteste has a copy of poligono by creating new nodes
+			Node copy;  	
+			for(int i = 0;i < n ; i++) {
+				copy = new Node(poligono.get(i).x, poligono.get(i).y);
+				poligonoteste.add(copy);
+			}
+			int indexv = 0;
+			int currentEnergy = best;
+			int neighbourEnergy = 0;
+			
 			//random
-			int rand= new Random().nextInt(n-1) ;
+			int rand = new Random().nextInt(n-1);
 			for(int i=rand;i<crossesWithFirst.size();i++) {
 				if(crossesWithFirst.get(i).size() >1) {
-					found=i;
+					neighbourEnergy = crossesWithFirst.get(i).size();
+					indexv = i;
 					break;
 				}
-
 			}
-			if(crossesWithFirst.get(found).size() > 1) {
-				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(found);		
-				a = crossedEdgesList.get(0);
-				b = crossedEdgesList.get(1);
-				exchangeForSA(a,b, poligono2); //test exchange poligono2
-				// Get energy of solutions
-				Double currentEnergy = perimeter(poligono);
-				Double neighbourEnergy = perimeter(poligono2);
-
-				// Decide if we should accept the neighbour
-				if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) 
+			
+			// Decide if we should accept the neighbour
+			double r = Math.random();				
+			if (acceptanceProbability((double)currentEnergy, (double)neighbourEnergy, temp) > r) {
+				LinkedList<Edge> crossedEdgesList = crossesWithFirst.get(indexv);
+				a = crossedEdgesList.getFirst();
+				for(int k = 1; k<crossedEdgesList.size(); k++) {
+					b = crossedEdgesList.get(k);
 					exchange(a,b);
-
-
-				crossesWithFirst.clear();
-				findIntersection();
-				for(int i = 0;i < n ; i++) {
-					copy=new Node(poligono.get(i).x, poligono.get(i).y);
-					poligono2.add(copy);
-
 				}
-				// Keep track of the best solution found
-				if (currentEnergy < best) {
-					best = currentEnergy;
-				}
+				currentEnergy = crossesWithFirst.get(indexv).size();
 			}
-
-
+			
+			crossesWithFirst.clear();
+			findIntersection();
+			// Keep track of the best solution found
+			if (currentEnergy < best) {
+				best = currentEnergy;
+			}
 			// Cool system
 			temp *= 1-coolingRate; 
-
 		}
 
 	}
-
+	
 	//For testing purposes
-	static void print(int n) {
+	static void print(int n,LinkedList<Node> poligonoteste) {
 
-		for(int i = 0; i<poligono.size()-1; i++) {
-			System.out.print(poligono.get(i)+"->");
+		for(int i = 0; i<poligonoteste.size()-1; i++) {
+			System.out.print(poligonoteste.get(i)+"->");
 		}
-		System.out.println(poligono.getLast());
+		System.out.println(poligonoteste.getLast());
 	}
 
 	static void printIntersection() {
@@ -581,37 +632,23 @@ public class TP1_2 {
 		}
 	}
 
-
+	
 	public static void main(String args[]) {
 
 		int n,m;
 		Scanner in = new Scanner(System.in);
 		n = in.nextInt();
 		m = in.nextInt();
-		nodeArray = new Node[n];
-
-		/*
-		Node n0 = new Node(1,4);
-		nodeArray[0] = n0;
-		Node n1 = new Node(9,4);
-		nodeArray[1] = n1;
-		Node n2 = new Node(6,4);
-		nodeArray[2] = n2;
-		Node n3 = new Node(2,1);
-		nodeArray[3] = n3;
-		Node n4 = new Node(-1,1);
-		nodeArray[4] = n4;
-		Node n5 = new Node(-2,3);
-		nodeArray[5] = n5;
-		 */
-
 		generate(n,m);
 		permutation(n);
 		//nearest(nodeArray[0],n);
-		int sizeincrease = 2*10;
-		int size = (m+20)*sizeincrease;
+		
+		double sizeincrease = 1/m;
+		
+		int size = (int)((m)*sizeincrease);
 		//findIntersection();
 		//printIntersection();
+		ite = 0;
 		JFrame f = new JFrame("Representação gráfica dos poligonos");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		DrawPolygon p = new DrawPolygon();
@@ -620,20 +657,30 @@ public class TP1_2 {
 		f.setSize(size,size);
 		f.setVisible(true);
 		if(in.next().equals("next")) f.setVisible( false );
+		
 		//findIntersection();
 		//printIntersection();
-		//BIF(n);
+		BIF(n);
 		//fistImprovement(n);
 		//lessIntersections(n);
 		//randomNeighbor(n);
-		SA(n);
+		//SA(n);
 		//printIntersection();
+		
+		int tok = 0;
+		for(int i = 0; i<crossesWithFirst.size(); i++) {
+			if(crossesWithFirst.get(i).size() > 1) {
+				System.out.println("False");
+				tok = 1;
+			}
+		}
+		if(tok == 0) System.out.println("true");
+		
 		p.set(size,size,n,sizeincrease,poligono);
 		f.add(p);
 		f.setSize(size,size);
 		f.setVisible(true);
 		if(in.next().equals("next")) f.setVisible( false );
-
 		in.close();
 		return;		
 

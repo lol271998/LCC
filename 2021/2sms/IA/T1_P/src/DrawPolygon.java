@@ -5,14 +5,15 @@ import javax.swing.*;
 
 public class DrawPolygon extends JPanel {
 	
-	private int height,width,n,sizeincrease;
+	private int height,width,n;
+	double sizeincrease;
 	private LinkedList<Node> list;
 	
-	void set(int height,int width,int n,int sizeincrease,LinkedList<Node> list) {
+	void set(int height,int width,int n,double sizeincrease,LinkedList<Node> list) {
 		this.height = height;
 		this.width = width;
-		this.n = n;
 		this.sizeincrease = sizeincrease;
+		this.n = n;
 		this.list = list;
 	}
 
@@ -22,6 +23,7 @@ public class DrawPolygon extends JPanel {
 		int xPoints[] = new int[n+1];
         int yPoints[] = new int[n+1];
         
+        /*
 		//Eixo do y
 		g.drawLine(width/2,5,width/2,height-45);
 		g.drawLine(width/2,5,(width/2)-5,10);
@@ -48,15 +50,15 @@ public class DrawPolygon extends JPanel {
 		for(int i = (height/2)-10; i<height-10; i+=1*sizeincrease) {
 			g.drawLine((height/2)-5, i,(height/2)+5, i);
 		}
-		
+		*/
 		//(0,0) = ((height/2),width/2-10)
 		//g.drawLine(height/2,(width/2)-10, width-10, 0);
 		for(int i = 0; i<list.size(); i++) {
-			xPoints[i] = (list.get(i).x)*sizeincrease + (height/2);
-			yPoints[i] = (list.get(i).y)*sizeincrease + ((width/2)-30);
+			xPoints[i] = (int)((list.get(i).x)*sizeincrease/1.5) + (height/2);
+			yPoints[i] = (int)((list.get(i).y)*sizeincrease/1.5) + ((width/2)-30);
         }	
-		xPoints[n] = (list.getFirst().x)*sizeincrease + (height/2);
-		yPoints[n] = (list.getFirst().y)*sizeincrease + ((width/2)-30);
+		xPoints[n] = (int)((list.getFirst().x)*sizeincrease/1.5) + (height/2);
+		yPoints[n] = (int)((list.getFirst().y)*sizeincrease/1.5) + ((width/2)-30);
 		
 		g.drawPolyline(xPoints,yPoints,n+1);
 	}
