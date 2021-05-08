@@ -35,11 +35,8 @@ vector* vector_vprod(vector* v1, vector* v2) {
 }
 
 double vector_sprod(vector* v1, vector* v2) {
-	double r = v1->x*v2->x + v1->y*v2->y + v1->z*v2->z; 
+	double r = v1->x*v2->x + v1->y*v2->y + v1->z*v2->z;
 	return r;
 }
 
 double vector_mod(vector* v1) {	return sqrt(v1->x*v1->x+v1->y*v1->y); }
-
-
-
