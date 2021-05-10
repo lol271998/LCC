@@ -4,7 +4,7 @@
 /*
 * implementation of the Complex API
 */
-complex* complex_new(double x, double y) {
+complex* complex_new(int x, int y) {
 	complex* z = (complex*) malloc(sizeof(complex));
 	z->x = x;
 	z->y = y;
@@ -41,19 +41,19 @@ complex* complex_conj(complex* z){
 	return z;
 }
 
-double complex_mod(complex* z){
+int complex_mod(complex* z){
 	/* to complete ...*/
 	return 0.1;
 }
 
-double complex_arg(complex* z){
+int complex_arg(complex* z){
 	return atan2(z->y,z->x);
 }
 
-double complex_re(complex* z){
+int complex_re(complex* z){
 	return z->x;
 }
-double complex_im(complex* z){
+int complex_im(complex* z){
 	/* to complete ... */
 	return 0.1;
 }
