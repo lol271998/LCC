@@ -1,0 +1,9 @@
+SELECT
+  Country, COUNT(*) AS N
+FROM
+  STREAM
+  RIGHT OUTER JOIN CUSTOMER
+  USING(CustomerId)
+WHERE
+  StreamId IS NULL
+  GROUP BY Country;
