@@ -1,0 +1,11 @@
+SELECT
+ Title
+FROM
+  MOVIE
+  NATURAL JOIN MOVIE_GENRE
+  JOIN GENRE USING (GenreId)
+WHERE
+  Label IN ('Comedy','Action')
+GROUP BY
+  Title
+HAVING COUNT(DISTINCT Label) >= 2;

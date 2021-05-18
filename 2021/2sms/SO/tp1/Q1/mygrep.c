@@ -13,14 +13,14 @@ int main(int argc, char const *argv[]) {
 	size_t n = 0;
 	int line_count = 0;
 	FILE *fp = fopen(argv[1],"r");
-	
+
 	const char* needle = argv[2];
 
 	while ((getline(&line,&n,fp)) != -1) {
 		//printf("n: %ld\n",n);
 		line_count++;
 		char* str = strstr(line,needle);
-		
+
 		if(str!=NULL) {
 			printf("[%d:%ld",line_count,(strlen(line)-(strlen(str))+1));
 			str++;
@@ -42,10 +42,3 @@ int main(int argc, char const *argv[]) {
 
 	return 0;
 }
-/*
-n = getline; //n = numero de caracteres;
-strtok;
-strlen;
-strcmp;
-strstr;
-*/

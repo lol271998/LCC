@@ -1,6 +1,6 @@
 --1
 SELECT Name
-FROM 
+FROM
 	CUSTOMER LEFT JOIN STREAM USING(CustomerId)
 WHERE
 	StreamId IS NULL
@@ -31,9 +31,9 @@ GROUP BY Country
 --3a
 
 SELECT Title, COUNT(StreamId) AS N
-FROM 
+FROM
 	MOVIE LEFT JOIN STREAM USING (MovieId)
-WHERE 
+WHERE
 	Year = 2015
 GROUP BY Title
 HAVING N<=5
@@ -52,7 +52,7 @@ AND
 	)
 ;
 
-ver quantas streams foram afetadas
+--ver quantas streams foram afetadas
 SELECT *
 FROM STREAM NATURAL JOIN CUSTOMER
 WHERE Charge <= 5.5 AND Country = 'China';
@@ -74,12 +74,12 @@ SELECT MovieId, Title, Label
 SELECT Name, COUNT(*) AS N
 FROM MOVIE
 NATURAL JOIN MOVIE_ACTOR
-NATURAL JOIN ACTOR 
+NATURAL JOIN ACTOR
 GROUP BY Name
 HAVING N >= 15
 ORDER BY N DESC, Name;
 
-//10
+--10
 SELECT Title
 FROM MOVIE
 NATURAL JOIN MOVIE_ACTOR
@@ -95,8 +95,8 @@ NATURAL JOIN
 JOIN
 	(ACTOR A2
 	 NATURAL JOIN MOVIE_ACTOR MA2)
-USING(MovieId) 
-WHERE 
+USING(MovieId)
+WHERE
 A1.Name = 'Johnny Depp' AND
 A1.Name <> A2.Name
 ORDER BY Title, A2.Name;
@@ -119,7 +119,7 @@ ORDER BY N DESC, A1.Name,A2.Name;
 --O AVALIADOR NÃO ACEITA COMENTÁRIOS
 UPDATE STREAM
 SET Charge = 4.5
-WHERE 
+WHERE
 	CustomerId <> ALL ( -- diferente de qualquer
 		--Cliente não é da região africa
 		SELECT CustomerId
@@ -158,7 +158,7 @@ LIMIT 15;
 
 --14
 SELECT Title, REGION.Name, StreamId
-FROM 
+FROM
 	MOVIE JOIN REGION --todas as combinações
 	LEFT JOIN
 	(STREAM NATURAL JOIN CUSTOMER
@@ -169,7 +169,7 @@ WHERE Title LIKE '%war'
 ORDER BY Title, REGION.Name;
 
 SELECT Title, REGION.Name, COUNT(StreamId) AS N
-FROM 
+FROM
 	MOVIE JOIN REGION --todas as combinações
 	LEFT JOIN
 	(STREAM NATURAL JOIN CUSTOMER
@@ -179,6 +179,3 @@ FROM
 WHERE Title LIKE '%war'
 GROUP BY Title, REGION.Name
 ORDER BY Title, REGION.Name;
-
-
-
