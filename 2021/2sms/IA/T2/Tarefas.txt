@@ -1,8 +1,0 @@
-Ler dados
-Análise de variáveis
-Pré proessamento      - Resolver problemas que existam nos dados (Valores nulos)
-Estudar os parametros - Para cada algoritmo existem vários parametros diferentes, ver quais é que funcionam melhor
-Avaliar os algoritmos - Ver se o algorimo consegue perceber bem a variavel objectivo, comparar os dois algoritmos e ver qual é que funciona melhor
-Apresentar resultados - Gráficos, tabelas (para cada algorimo)
-
-Relatório deve descrever este processo.
