@@ -1,0 +1,7 @@
+N(i) = N = 25 0000
+R(i) = 8 + 8 = 16
+bfr(i) = 256/16 = 16
+n(i) = 25000/16 = 98
+          - Usando indice = log2(98) + 1 = (Arredondado para cima)
+Nº blocos
+          - Sem o usar o indice = 400

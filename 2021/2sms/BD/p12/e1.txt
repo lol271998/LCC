@@ -1,0 +1,20 @@
+1.
+T1:
+    N = 10 000, R = 32
+    bfr = B/R (Arredondado para baixo)
+        4096/32 = 128 (Arredondado para baixo)
+    n   = N/bfr (Arredondado para cima)
+        10 000/128 = 79 (Arredondado para cima)
+T2: 
+    N = 100 000, R = 130
+    bfr = B/R (Arredondado para baixo)
+        4096/130 = 31  (Arredondado para baixo)
+    
+    n   = N/bfr (Arredondado para cima)
+        100 000/31 = 3226 (Arredondado para cima)
+
+2.
+        Acessos via calsse primária [log2(n)]       Outro Atributo (n)
+T1      [log2(79)] = 7                              79   
+T2      [log2(3226)] = 12                           3226
+
